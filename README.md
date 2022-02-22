@@ -162,7 +162,7 @@ pvremove (8)         - Remove LVM label(s) from physical volume(s)
 ```
 
 
-### Ejercicio Práctico 1: Usar LVM
+### Ejercicio Práctico 1: `Usar LVM`
 
 * Se crean **`tres unidades físicas imaginarias`** usando **`dd`** para generar espacio de disco virtual.
 
@@ -172,7 +172,7 @@ pvremove (8)         - Remove LVM label(s) from physical volume(s)
 
 1. Crear los 3 **`ficheros de imagen`**
 
-#### **DD (Conver and COPY a FILE) --> /dev/zero (Imaginario)**
+#### DD (`Convert and COPY a FILE`) --> /dev/zero (Imaginario)
 
 ```
 root@i11:/opt/lvm# dd if=/dev/zero of=disk01.img bs=1k count=500K
@@ -253,11 +253,11 @@ root@i11:/opt/lvm# losetup -a
 root@i11:/opt/lvm# 
 ```
 
-#### PV (PHYSICAL VOLUMES) --> Crea volúmenes físicos.
+#### PV (PHYSICAL VOLUMES) --> `Crea volúmenes físicos`.
 
 2. Disponemos de **`3 trozos`** de almacenamiento para crear un **`volumen físico`** para cada uno de ellos.
 
-    * Es decir, adaptados para ser utilizados como almacenamiento **LVM**.
+    * Es decir, adaptados para ser utilizados como almacenamiento **`LVM`**.
 
     * Primero se realiza el **`Physical Volume`**.
 
@@ -289,7 +289,7 @@ root@i11:/opt/lvm# pvdisplay /dev/loop2
 
 
 
-#### VG (VOLUME GROUPS) --> Agrupa volúmenes físicos.
+#### VG (VOLUME GROUPS) --> `Agrupa volúmenes físicos`.
 
 * Los espacios de almacenamiento **`LVM`**, se agrupan en **`UNIDADES DE ALMACENAMIENTO GRUPALES`** llamados **`VOLUME GROUPS`**.
 
@@ -299,7 +299,7 @@ root@i11:/opt/lvm# pvdisplay /dev/loop2
 
 1. `Creamos` el VOLUME GROUP
 ```
-root@i11:/opt/lvm# vgcreate diskedt /dev/loop2 /dev/loop3
+root@i11:/opt/lvm# vgcreate diskedt /dev/loop0 /dev/loop1
   Volume group "diskedt" successfully created
 ```
 2. `Visualizamos` el VOLUME GROUP
@@ -330,33 +330,21 @@ root@i11:/opt/lvm# vgdisplay diskedt
 
 ### `NOTA`
 
-* Los espacios de **`100M`** de **loop2** y **loop3** se juntan para crear un **dispositivo físico de 200M** llamado **/dev/diskedt** (No aparece hasta particionarlo) (Aprox de 192M).
+* Los espacios de **`100M`** de **`loop0`** y **`loop1`** se juntan para crear un **`dispositivo físico de 200M`** llamado **`/dev/diskedt`** 
 
-       * Se pierde espacio de almacenamiento debido a crear estructuras para la gestión LVM.
+    * (`No aparece hasta particionarlo`) (Aprox de `192M`).
 
-* Observamos el antes y después de asignar **PHYSICAL VOLUMES** al **VOLUME GROUP**
+        * Se `pierde espacio` de almacenamiento debido a crear estructuras para la `gestión LVM`.
+
+* Observamos el antes y después de asignar **`PHYSICAL VOLUMES`** al **`VOLUME GROUP`**
 
 ```
 # ANTES
 
-root@i11:/opt/lvm# pvdisplay /dev/loop2
-  --- Physical volume ---
-  PV Name               /dev/loop2
-  VG Name               diskedt
-  PV Size               100.00 MiB / not usable 4.00 MiB
-  Allocatable           yes 
-  PE Size               4.00 MiB
-  Total PE              24
-  Free PE               24
-  Allocated PE          0
-  PV UUID               lCiF9w-V0Wh-2xC8-u04t-cHCT-zaQw-AlCP8k
-   
-# DESPUES
-
-root@i11:/opt/lvm# pvdisplay /dev/loop2
+root@i11:/opt/lvm# pvdisplay /dev/loop0
   "/dev/loop2" is a new physical volume of "100.00 MiB"
   --- NEW Physical volume ---
-  PV Name               /dev/loop2
+  PV Name               /dev/loop0
   VG Name               
   PV Size               100.00 MiB
   Allocatable           NO
@@ -365,14 +353,286 @@ root@i11:/opt/lvm# pvdisplay /dev/loop2
   Free PE               0
   Allocated PE          0
   PV UUID               lCiF9w-V0Wh-2xC8-u04t-cHCT-zaQw-AlCP8k
+```
+```
+# DESPUES
+
+root@i11:/opt/lvm# pvdisplay /dev/loop0
+  --- Physical volume ---
+  PV Name               /dev/loop0
+  VG Name               diskedt
+  PV Size               100.00 MiB / not usable 4.00 MiB
+  Allocatable           yes 
+  PE Size               4.00 MiB
+  Total PE              24
+  Free PE               24
+  Allocated PE          0
+  PV UUID               lCiF9w-V0Wh-2xC8-u04t-cHCT-zaQw-AlCP8k
+
+
+```
+
+#### LV (LOGICAL VOLUME) --> `Crea volúmenes lógicos`.
+
+* Cuando ya tengamos los **`VOLUME GROUP`** podemos hacer particiones llamadas **`Logical Volume`**.
+
+    * Creamos **`2 PARTICIÓNES LÓGICAS`**: **`50M`** llamado **`sistema`** y **`150M`** llamado **`dades`**.
+
+    * **`Resumen`**: Fijarse que de de `DOS PV (Physical Volume de 100M)` --> Se ha generado un `VM (Volume Group) = diskedt de 200M` --> Ahora se **`subdividirá`** en 2 particiones **`Logical Volume`**.
+
+1. **`LV: Sistema`**
+
+```
+root@i11:/opt/lvm# lvcreate -L 50M -n sistema /dev/diskedt
+
+  Rounding up size to full physical extent 52.00 MiB
+  Logical volume "sistema" created.
+```
+
+2. **`LV: Dades`**
+```
+root@i11:/opt/lvm# lvcreate -L 150M -n dades /dev/diskedt
+
+  Rounding up size to full physical extent 152.00 MiB
+  Logical volume "sistema" created.
+```
+
+**`IMPORTANTE`**
+
+* Dará error en la **segunda**.
+
+* Para solucionarlo usaremos el **`-l100%FREE`**.
+
+```
+root@i11:/opt/lvm# lvcreate -l100%FREE -n dades /dev/diskedt
+  Logical volume "dades" created.
+```
+
+* Significa que usará el **`100% del DISCO`**, es decir lo que le **`RESTA`** en este caso.
+
+    * Si fuera al 50% --> **`-l50%FREE.`**.
+
+
+
+3. **`MOSTRAMOS LOS RESULTADOS con un "LVDISPLAY"`**
+
+```
+root@i11:/opt/lvm# lvdisplay
+  --- Logical volume ---
+  LV Path                /dev/diskedt/sistema
+  LV Name                sistema
+  VG Name                diskedt
+  LV UUID                sLtVEg-c2qJ-ayH2-z7WQ-DyYR-iyEo-wOxOje
+  LV Write Access        read/write
+  LV Creation host, time i11, 2022-02-18 11:28:27 +0100
+  LV Status              available
+  # open                 0
+  LV Size                200.00 MiB
+  Current LE             50
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     256
+  Block device           253:0
+   
+  --- Logical volume ---
+  LV Path                /dev/diskedt/dades
+  LV Name                dades
+  VG Name                diskedt
+  LV UUID                Mnhi4c-9Ia9-3VA6-DTyo-Dhcq-ESEB-0ez2fU
+  LV Write Access        read/write
+  LV Creation host, time i11, 2022-02-18 11:29:24 +0100
+  LV Status              available
+  # open                 0
+  LV Size                100.00 MiB
+  Current LE             25
+  Segments               1
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently set to     256
+  Block device           253:1
+
+```
+
+### `VERIFICACIÓN - CREACIÓN`
+
+4. Hacemos un **`TREE`** para verificar los datos --> Nos debería aparecer correctamente. **Vemos que sale VG / LVM / PV**
+```
+root@i11:/opt/lvm# tree /dev/disk
+
+# Vemos que sale
+
+# VG
+
+│   ├── dm-name-diskedt-dades -> ../../dm-1
+│   ├── dm-name-diskedt-sistema -> ../../dm-0
+
+
+# LVM
+
+│   ├── dm-uuid-LVM-z3Upz9EN424JDCdcse2W2qVOkdrr4D6LKamHDKLQGCg0B8VZ3avxd8sYkZnBc6Oc -> ../../dm-0
+│   ├── dm-uuid-LVM-z3Upz9EN424JDCdcse2W2qVOkdrr4D6LZEEOn6uidryzQ3jZ8AYfsdORy2EitpXm -> ../../dm-1
+
+
+# PV
+
+│   ├── lvm-pv-uuid-HK5Cgu-sp8y-aVWK-RAoL-G2Ok-xs5f-jbqGI3 -> ../../loop2
+│   ├── lvm-pv-uuid-lCiF9w-V0Wh-2xC8-u04t-cHCT-zaQw-AlCP8k -> ../../loop1
+│   ├── lvm-pv-uuid-SQmPdK-RXTc-s7Uk-fXM9-MuiP-ghw7-yQkrXz -> ../../loop0
+
+```
+
+5. Hacemos un ls -l.
+
+```
+root@i11:/opt/lvm# ls -l /dev/diskedt/
+
+
+lrwxrwxrwx 1 root root 7 Feb  9 09:31 dades -> ../dm-1
+lrwxrwxrwx 1 root root 7 Feb  9 09:30 sistema -> ../dm-0
+```
+
+
+#### **`MFKS (mkfs) / MONTARLO (mount) - (/etc/fstab) / PONER DATOS`**
+
+* Al observar la cantidad de PE (**`BLOQUES = UNIDADES DE ASIGNACION`**) que utiliza cada **`Logical Volume`**:
+
+    * **`SISTEMA`**: 13 **UNIDADES de ASIGNACIÓN** (**`PE`**) de 4MB = 52MB de almacenamiento.
+
+        * Todo en un **mismo segmento** (Physical Volume)
+
+    * **`DADES`**: 35 de 4MB que proporciona 140MB de almacenamiento.
+
+        * Ocupa *`2 segmentos`* - Es decir usa 2 **`Physical Volumes`**
+
+
+* **`RESUMEN`:** Cada bloque **`PE`** se tiene que multiplicar por 4MB que está reservado para **`LV`**. Ahí saldrá el almacenamiento que tendrá **`asignado`**.
+
+1. **SISTEMA**
+
+```
+root@i11:/opt/lvm# mkfs -t ext4 /dev/diskedt/sistema
+```
+
+2. **DADES**
+
+```
+root@i11:/opt/lvm# mkfs -t ext4 /dev/diskedt/dades
+```
+
+#### **`MOUNT POINT`**
+
+* **`Montaje Manual`**
+
+```
+root@i11:/opt/lvm# mkdir /mnt/dades
+root@i11:/opt/lvm# mkdir /mnt/sistema
+```
+
+```
+root@i11:/opt/lvm# mount /dev/diskedt/dades /mnt/dades/
+root@i11:/opt/lvm# mount /dev/diskedt/sistema /mnt/sistema/
+
+```
+
+* **`Montaje Automático`**
+
+*OPCIONAL*
+
+* Hay que editar el **`/etc/fstab`**:
+
+
+```
+# vim /etc/fstab
+```
+
+```
+/dev/diskedt/sistema  /mnt/sistema  ext4  errors=remount-ro 0 0
+/dev/diskedt/dades  /mnt/dades  ext4  errores=remount-ro  0 0
+```
+
+
+
+#### **`COPY DATA ON IT`**
+
+```
+root@i11:/opt/lvm# cp -R /boot/* /mnt/dades
+```
+```
+root@i11:/opt/lvm# cp /boot/* /mnt/sistema/
+```
+
+O
+
+```
+sudo cp /bin/?? /mnt/sistema/
+sudo cp /bin/?? /mnt/DADES/
+```
+
+
+#### **`USAMOS DF PARA REPORTAR EL ESPACIO DE DISCO USADO`**.
+
+
+```
+root@i11:/opt/lvm# df -h
+Filesystem                                                            Size  Used Avail Use% Mounted on
+udev                                                                  7.8G     0  7.8G   0% /dev
+tmpfs                                                                 1.6G  1.9M  1.6G   1% /run
+/dev/nvme0n1p5                                                        183G   52G  122G  30% /
+tmpfs                                                                 7.8G   52M  7.8G   1% /dev/shm
+tmpfs                                                                 5.0M  4.0K  5.0M   1% /run/lock
+/dev/loop0                                                            100M  100M     0 100% /snap/core/11993
+/dev/loop1                                                            128K  128K     0 100% /snap/msnake/10
+tmpfs                                                                 1.6G  916K  1.6G   1% /run/user/103033
+gandhi.informatica.escoladeltreball.org:/users/inf/hisx2/isx36579183  931G  319G  613G  35% /home/users/inf/hisx2/isx36579183/isx36579183
+/dev/sda1                                                             932G  501G  432G  54% /media/isx36579183/ChaseKiD03 My Passport
+/dev/mapper/diskedt-dades                                             131M   61M   60M  51% /mnt/dades
+/dev/mapper/diskedt-sistema                                            46M   45M     0 100% /mnt/sistema
+root@i11:/opt/lvm# 
+
 
 ```
 
 
 
 
+#### **`CON LA ORDEN BLKID VEMOS BLOCK DEVICE ATTRIBUTES`**.
 
+```
+root@i11:/opt/lvm# blkid
 
+...
+/dev/mapper/diskedt-sistema: UUID="0ef8d932-4dfa-449d-9385-89f6fbc8e5fb" BLOCK_SIZE="1024" TYPE="ext4"
+/dev/mapper/diskedt-dades: UUID="18b81e3e-49c5-419f-80ca-8c1b74130b60" BLOCK_SIZE="1024" TYPE="ext4"
+root@i11:/opt/lvm# 
+
+```
+
+#### **`OTROS COMANDOS`**
+
+* **`LSBLK`**
+
+```
+root@i11:/mnt/dades# lsblk
+NAME              MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+loop0               7:0    0  99.4M  1 loop /snap/core/11993
+loop1               7:1    0    16K  1 loop /snap/msnake/10
+loop2               7:2    0   100M  0 loop 
+├─diskedt-sistema 254:0    0    52M  0 lvm  /mnt/sistema
+└─diskedt-dades   254:1    0   140M  0 lvm  
+loop3               7:3    0   100M  0 loop 
+└─diskedt-dades   254:1    0   140M  0 lvm  
+loop4               7:4    0   100M  0 loop 
+nvme0n1           259:0    0 465.8G  0 disk 
+├─nvme0n1p1       259:1    0     1K  0 part 
+├─nvme0n1p5       259:2    0 186.3G  0 part /
+├─nvme0n1p6       259:3    0 186.3G  0 part 
+└─nvme0n1p7       259:4    0   4.7G  0 part 
+root@i11:/mnt/dades# 
+
+```
+
+### Ejercicio Práctico 2: `Modificaciones en Caliente`
 
 
 
