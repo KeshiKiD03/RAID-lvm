@@ -269,7 +269,7 @@ root@i11:/opt/lvm# pvcreate /dev/loop0 /dev/loop1 /dev/loop2
   Physical volume "/dev/loop2" successfully created.
 ```
 
-##### Con la orden pvdisplay, observamos a fondo el volumen físico.
+* Con la orden **`pvdisplay`**, observamos a fondo el **`volumen físico`**.
 
 
 ```
