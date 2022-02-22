@@ -59,27 +59,27 @@
 
 * 1 o más **LVM** son combinados en **`Grupos de Volumen`**.
 
-       * Cada **`almacenamiento grupal`** está dividido en uno o más **`volúmenes lógicos`**.
+    * Cada **`almacenamiento grupal`** está dividido en uno o más **`volúmenes lógicos`**.
 
-              * Los **volúmenes lógicos** son como **particiones estándar**.
+        * Los **volúmenes lógicos** son como **particiones estándar**.
 
-                     * Tienen el FILESYSTEM, ext4 y el mountpoint.
+            * Tienen el `FILESYSTEM`, `ext4` y el `mountpoint`.
 
 
 ### Resumen: 
 
 * LVM son una `pila de bloques`.
 
-       * Un bloque es un `almacenamiento` que se usa para almacenar datos.
+    * Un bloque es un `almacenamiento` que se usa para almacenar datos.
 
-       * Los bloques pueden ser agrupados en un grupo (`stack`).
+    * Los bloques pueden ser agrupados en un grupo (`stack`).
 
-              * Los discos físicos son combinados en un *volumen grupal*.
+        * Los discos físicos son combinados en un *`volumen grupal`*.
 
-              * El stack resultante, puede subdividirse en varios **volúmenes de tamaño variable.**.
+        * El `stack resultante`, puede subdividirse en varios **`volúmenes de tamaño variable`.**.
 
 
-* Un administrador puede hacer crecer o decrecer los **volúmenes lógicos** sin tener que **destruir datos**, en lugar de **standard partitions**. En caliente.
+* Un administrador puede hacer crecer o decrecer los **`volúmenes lógicos`** sin tener que **`destruir datos`**, en lugar de **`standard partitions`**. En caliente.
 
 
 ### ÓRDENES A UTILIZAR:
