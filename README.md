@@ -222,7 +222,7 @@ root@i11:/opt/lvm# losetup -a
 root@i11:/opt/lvm# 
 ```
 
-#### **Asignarlos a un dispositivo LOSETUP (/dev/loop2 /dev/loop3)**
+#### **Asignarlos a un dispositivo LOSETUP (/dev/loop0 /dev/loop2 /dev/loop3)**
 
 * Añadimos a un **`DISPOSITIVO LOSETUP`**
 ```
@@ -253,68 +253,49 @@ root@i11:/opt/lvm# losetup -a
 root@i11:/opt/lvm# 
 ```
 
+#### PV (PHYSICAL VOLUMES) --> Crea volúmenes físicos.
 
+2. Disponemos de **`3 trozos`** de almacenamiento para crear un **`volumen físico`** para cada uno de ellos.
 
-#### **Crear la RAID1 con los DOS DISCOS (/dev/loop2 /dev/loop3)**
+    * Es decir, adaptados para ser utilizados como almacenamiento **LVM**.
 
-* Creamos el RAID 1
-```
-root@i11:/opt/lvm# mdadm --create /dev/md/raid_lvm0 --level=1 --raid-devices=2 /dev/loop2 /dev/loop3
-
-mdadm: Note: this array has metadata at the start and
-    may not be suitable as a boot device.  If you plan to
-    store '/boot' on this device please ensure that
-    your boot-loader understands md/v1.x metadata, or use
-    --metadata=0.90
-Continue creating array? yes
-
-mdadm: Defaulting to version 1.2 metadata
-mdadm: array /dev/md/raid_lvm0 started.
+    * Primero se realiza el **`Physical Volume`**.
 
 ```
-* Comprobamos que está bien creada // **IMPORTANTE MD127: active raid1 loop3[1] loop2[0]**
+root@i11:/opt/lvm# pvcreate /dev/loop0 /dev/loop1 /dev/loop2
+
+  Physical volume "/dev/loop0" successfully created.
+  Physical volume "/dev/loop1" successfully created.
+  Physical volume "/dev/loop2" successfully created.
 ```
-root@i11:/opt/lvm# cat /proc/mdstat
 
-Personalities : [linear] [multipath] [raid0] [raid1] [raid6] [raid5] [raid4] [raid10] 
+##### Con la orden pvdisplay, observamos a fondo el volumen físico.
 
-md127 : active raid1 loop3[1] loop2[0]
-      510976 blocks super 1.2 [2/2] [UU]
-      
-unused devices: <none>
-```
-```
-root@i11:/opt/lvm# mdadm --detail /dev/md/raid_lvm0
-
-/dev/md/raid_lvm0:
-           Version : 1.2
-     Creation Time : Fri Feb 18 10:26:24 2022
-        Raid Level : raid1
-        Array Size : 510976 (499.00 MiB 523.24 MB)
-     Used Dev Size : 510976 (499.00 MiB 523.24 MB)
-      Raid Devices : 2
-     Total Devices : 2
-       Persistence : Superblock is persistent
-
-       Update Time : Fri Feb 18 10:26:26 2022
-             State : clean 
-    Active Devices : 2
-   Working Devices : 2
-    Failed Devices : 0
-     Spare Devices : 0
-
-Consistency Policy : resync
-
-              Name : i11:raid_lvm0  (local to host i11)
-              UUID : 342cdb30:85f0d347:c5215212:31d4f70c
-            Events : 17
-
-    Number   Major   Minor   RaidDevice State
-       0       7        2        0      active sync   /dev/loop2
-       1       7        3        1      active sync   /dev/loop3
-root@i11:/opt/lvm# 
 
 ```
+root@i11:/opt/lvm# pvdisplay /dev/loop2
+  "/dev/loop2" is a new physical volume of "100.00 MiB"
+  --- NEW Physical volume ---
+  PV Name               /dev/loop2
+  VG Name               
+  PV Size               100.00 MiB
+  Allocatable           NO
+  PE Size               0   
+  Total PE              0
+  Free PE               0
+  Allocated PE          0
+  PV UUID               lCiF9w-V0Wh-2xC8-u04t-cHCT-zaQw-AlCP8k
+```   
+
+
+
+
+```
+
+
+
+
+
 
 ## RAID
 
