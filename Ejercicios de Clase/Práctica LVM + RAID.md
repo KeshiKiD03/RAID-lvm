@@ -882,22 +882,21 @@ gandhi.informatica.escoladeltreball.org:/users/inf/hisx2/isx36579183  931G  327G
 
 ### **Provocar un FAIL a un DELS DISCOS del RAID1.** (REVISAR)
 
-1. Con un sudo pvmove /dev/md0 /dev/md1, movemos los datos.
+1. Provocar un FAIL (Simula un FAIL) en el disco de la primera partición del RAID1.
 ```
-$ sudo pvmove /dev/md0 /dev/md1
+# mdadm /dev/md/raid_lvm0 --rail /dev/loop1
 ```
 
-< REVISAR EN EL PDF ?>
-
+2. Hacer un pvmove --> Mover los datos del PRIMER RAID1 al SEGUNDO RAID1.
 ```
-# mdadm /dev/md/raid_lvm1 --fail /dev/loop1
+# pvmove /dev/md/raid_lvm0 /dev/md/raid_lvm1
 ```
 
 ### **Eliminar completament el RAID1 del VG.** (REVISAR)
 
-2. Con un sudo vgreduce mydisk /dev/md0 --> Eliminamos del GRUPO la primera partición RAID1 (md0).
+3. Con un sudo vgreduce mydisk /dev/md0 --> Eliminamos del GRUPO mydisk, la primera partición RAID1 (raid_lvm0).
 ```
-$ sudo vgreduce mydisk /dev/md0
+$ sudo vgreduce mydisk /dev/md/raid_lvm0
 ```
 
 
@@ -905,44 +904,127 @@ $ sudo vgreduce mydisk /dev/md0
 ## **Práctica 2 (REAL) (REHACER CON VIRTUALBOX)
 
 ### **CREAR SDA2: 10G, sda3: 4G, SDA4: 4G**
+
+1. Usamos el FDISK
+```
+# fdisk /dev/nvme0n1--> Entrem al disc i creem les particions especificades a l'enunciat
+```
+```
+# n + p + enter + 10G = sda2
+```
+```
+# n + p + enter + 4G = sda3
+```
+```
+# n + p + enter + 4G = sda4
+```
+```
+# p --> Comrpovem taula de particions
+```
+```
+# w --> Guardem
 ```
 
+2. Comprobamos con el **partprobe**.
+```
+# partprobe /dev/nvme0n1
 ```
 
 ### **Crear un RAID1 amb SDA3 i SDA4**
 
-1. Crear el grupo.
-
+3. Creem el RAID 1 amb 'sda3' i 'sda4'
 ```
-# vgcreate diskedt /dev/md0
-```
-
-```
-# lvcreate -L +3G
+# mdadm --create /dev/md/myraid --level=1 --raid-devices=2 /dev/nvme0n1p3 /dev/nvme0n1p4
 ```
 
 
 ### **Generar un VG anomenat DISKEDT amb SDA3 i SDA4.**
-```
 
+4. Assignem 'sda3' i 'sda4' (que estàn dins del RAID 1) al 'volume group' 'diskedt'
+```
+# vgcreate diskedt /dev/md/myraid
 ```
 
 ### **Generar un LV Sistema de 3G, Dades de 1G.**
-```
 
+5. Creem 'logical volume' de 3G anomentat 'sistema' a 'diskedt'
+```
+# lvcreate -L 3G -n sistema /dev/diskedt
 ```
 
 ### **Muntar i posar-hi DADES.**
+
+6. Ídem a l'anterior però d'1G i anomenat 'dades'
+```
+# lvcreate -L 1G -n dades /dev/diskedt
 ```
 
+7. Creem aquestes carpetes per muntar 'sistema' i 'dades'
+```
+# mkdir /mnt/sistmea /mnt/dades
+```
+
+8. Li posem un sistema de fitxers 'ext4'
+```
+# mkfs -t ext4 /dev/diskedt/sistema
+# mkfs -t ext4 /dev/diskedt/dades
+```
+
+9. Muntem la partició 'sistema' on correspon
+```
+# mount /dev/mydisc/sistema /mnt/sistema
+```
+
+10. Ídem a l'anterior però amb la partició 'dades'
+```
+# mount /dev/mydisc/dades /mnt/dades
+```
+
+11. Posar-hi dades a /mnt/sistema i /mnt/dades
+```
+# cp -r /bin/x\* /mnt/sistema
+# cp -r /bin/x\* /mnt/dades
 ```
 
 ### **Automatitzar el muntatge /mnt/dades, /mnt/sistema).**
+
+12. Editamos el fichero /etc/fstab
+```
+# vim /etc/fstab
+
 ```
 
+```
+
+/dev/diskedt/sistema /mnt/sistema ext4 errors=remount-ro 0 0
+/dev/diskedt/dades /mnt/dades ext4 errors=remount-ro 0 0
+
+```
+
+13. Comprobamos que se monta automáticamente con un **mount -a**
+
+```
+# mount -a 
+```
+
+14. Para que los RAID se monten automáticamente.
+```
+# mdadm --examine --scan > /etc/mdadm/mdadm.conf
 ```
 
 ### **Reboot i verificar que dades i sistema estan disponibles.**
+
+* Vemos que realmente aparecen correctamente.
 ```
 
 ```
+
+### **DESMONTAR**
+
+1. Comentar las líneas del **/etc/fstab**.
+
+2. Mount -a --> Para comprobar
+
+3. Umount /mnt/sistema 
+
+4. Umount /mnt/dades
