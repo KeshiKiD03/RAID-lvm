@@ -626,7 +626,7 @@ Writing superblocks and filesystem accounting information: done
 
 -----------------------------------------------------------------------------------------
 
-1. **MOUNT POINT**
+1. **MOUNT POINT FSTAB Y RAID**
 
 
 * Crear primero el directorio si no existe. Montar el LVM al directorio.
@@ -639,6 +639,28 @@ root@i11:/opt/lvm# mount /dev/mydisk/dades /mnt/dades
 root@i11:/opt/lvm# mount /dev/mydisk/sistema /mnt/sistema
 ```
 
+*OPCIONAL*
+
+  * 1.2. Si queremos que sea automático el **MONTAJE**.
+
+    * Hay que editar el /etc/fstab:
+
+```
+/dev/diskedt/sistema  /mnt/sistema  ext4  errors=remount-ro 0 0
+/dev/diskedt/dades  /mnt/dades  ext4  errores=remount-ro  0 0
+```
+
+<FOTO_RAID5>
+
+* Para montar automáticamente el RAID.
+
+```
+mdadm --examine --scan > /etc/mdadm/mdadm.conf
+```
+
+* Aseguramos que tenemos datos con **df -h**
+
+*OPCIONAL*
 
 2. **COPY DATA ON IT**
 
@@ -858,47 +880,69 @@ gandhi.informatica.escoladeltreball.org:/users/inf/hisx2/isx36579183  931G  327G
 /dev/mapper/mydisk-sistema                                            287M   64M  206M  24% /mnt/sistema
 ```
 
-### **Provocar un FAIL a un DELS DISCOS del RAID1.**
+### **Provocar un FAIL a un DELS DISCOS del RAID1.** (REVISAR)
+
+1. Con un sudo pvmove /dev/md0 /dev/md1, movemos los datos.
+```
+$ sudo pvmove /dev/md0 /dev/md1
+```
+
+< REVISAR EN EL PDF ?>
+
 ```
 # mdadm /dev/md/raid_lvm1 --fail /dev/loop1
 ```
 
-### **Eliminar completament el RAID1 del VG.**
+### **Eliminar completament el RAID1 del VG.** (REVISAR)
+
+2. Con un sudo vgreduce mydisk /dev/md0 --> Eliminamos del GRUPO la primera partición RAID1 (md0).
 ```
-# vgremove mydisk /dev/md/raid_lvm1
-
+$ sudo vgreduce mydisk /dev/md0
 ```
 
 
 
-
-
-## **Práctica 2 (REAL)
+## **Práctica 2 (REAL) (REHACER CON VIRTUALBOX)
 
 ### **CREAR SDA2: 10G, sda3: 4G, SDA4: 4G**
 ```
+
 ```
 
 ### **Crear un RAID1 amb SDA3 i SDA4**
+
+1. Crear el grupo.
+
 ```
+# vgcreate diskedt /dev/md0
 ```
+
+```
+# lvcreate -L +3G
+```
+
 
 ### **Generar un VG anomenat DISKEDT amb SDA3 i SDA4.**
 ```
+
 ```
 
 ### **Generar un LV Sistema de 3G, Dades de 1G.**
 ```
+
 ```
 
 ### **Muntar i posar-hi DADES.**
 ```
+
 ```
 
-### Automatitzar el muntatge /mnt/dades, /mnt/sistema).
-```
+### **Automatitzar el muntatge /mnt/dades, /mnt/sistema).**
 ```
 
-### Reboot i verificar que dades i sistema estan disponibles.
 ```
+
+### **Reboot i verificar que dades i sistema estan disponibles.**
+```
+
 ```
