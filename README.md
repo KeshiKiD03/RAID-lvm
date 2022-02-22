@@ -269,7 +269,7 @@ root@i11:/opt/lvm# pvcreate /dev/loop0 /dev/loop1 /dev/loop2
   Physical volume "/dev/loop2" successfully created.
 ```
 
-* Con la orden **`pvdisplay`**, observamos a fondo el **`volumen físico`**.
+* Con la orden **`pvdisplay`**, observamos a fondo el **`volumen fisico`**.
 
 
 ```
@@ -289,8 +289,87 @@ root@i11:/opt/lvm# pvdisplay /dev/loop2
 
 
 
+#### VG (VOLUME GROUPS) --> Agrupa volúmenes físicos.
+
+* Los espacios de almacenamiento **`LVM`**, se agrupan en **`UNIDADES DE ALMACENAMIENTO GRUPALES`** llamados **`VOLUME GROUPS`**.
+
+* El `VOLUME GROUP` a que crearemos se llamará **`diskedt`**.
+
+----------------------------------------------
+
+1. `Creamos` el VOLUME GROUP
+```
+root@i11:/opt/lvm# vgcreate diskedt /dev/loop2 /dev/loop3
+  Volume group "diskedt" successfully created
+```
+2. `Visualizamos` el VOLUME GROUP
+```
+root@i11:/opt/lvm# vgdisplay diskedt
+  --- Volume group ---
+  VG Name               diskedt
+  System ID             
+  Format                lvm2
+  Metadata Areas        2
+  Metadata Sequence No  1
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                0
+  Cur LV                0
+  Open LV               0
+  Max PV                0
+  Cur PV                2
+  Act PV                2
+  VG Size               192.00 MiB
+  PE Size               4.00 MiB
+  Total PE              48
+  Alloc PE / Size       0 / 0   
+  Free  PE / Size       48 / 192.00 MiB
+  VG UUID               z3Upz9-EN42-4JDC-dcse-2W2q-VOkd-rr4D6L
 
 ```
+
+### `NOTA`
+
+* Los espacios de **`100M`** de **loop2** y **loop3** se juntan para crear un **dispositivo físico de 200M** llamado **/dev/diskedt** (No aparece hasta particionarlo) (Aprox de 192M).
+
+       * Se pierde espacio de almacenamiento debido a crear estructuras para la gestión LVM.
+
+* Observamos el antes y después de asignar **PHYSICAL VOLUMES** al **VOLUME GROUP**
+
+```
+# ANTES
+
+root@i11:/opt/lvm# pvdisplay /dev/loop2
+  --- Physical volume ---
+  PV Name               /dev/loop2
+  VG Name               diskedt
+  PV Size               100.00 MiB / not usable 4.00 MiB
+  Allocatable           yes 
+  PE Size               4.00 MiB
+  Total PE              24
+  Free PE               24
+  Allocated PE          0
+  PV UUID               lCiF9w-V0Wh-2xC8-u04t-cHCT-zaQw-AlCP8k
+   
+# DESPUES
+
+root@i11:/opt/lvm# pvdisplay /dev/loop2
+  "/dev/loop2" is a new physical volume of "100.00 MiB"
+  --- NEW Physical volume ---
+  PV Name               /dev/loop2
+  VG Name               
+  PV Size               100.00 MiB
+  Allocatable           NO
+  PE Size               0   
+  Total PE              0
+  Free PE               0
+  Allocated PE          0
+  PV UUID               lCiF9w-V0Wh-2xC8-u04t-cHCT-zaQw-AlCP8k
+
+```
+
+
+
 
 
 
