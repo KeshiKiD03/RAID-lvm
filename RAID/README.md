@@ -24,9 +24,41 @@
 
 **Reduntant Array of Inexpensive Disks**
 
+* The basic idea behind RAID is to combine multiple small, inexpensive disk drives into an array to accomplish performance or redundancy goals not attainable with one large and expensive drive. 
+
+* La idea del **`RAID`** es **`combinar`** múltiples pequeños discos en un **`ARRAY`** para incrementar el **`RENDIMIENTO`** o la **`REDUNDANCIA`** no alcanzables con un solo disco **`CARO`**.
+
+* This array of drives appears to the computer as a single logical storage unit or drive.
+
+* Este **`ARRAY DE DISCOS`**, aparecen como un único **`ALMACENAMIENTO LÓGICO`** o **`UNIDAD`**.
+
+* RAID permite que la información se **`propague`** en diferentes discos.
+
+* RAID usa técnicas como:
+
+    * **`RAID0 --> Disk striping.`**.
+
+    * **`RAID1 --> Disk mirroring`**.
+
+    * **`RAID5 --> Disk striping with parity`**.
+
+* **Todo para obtener `REDUNDANCIA`, baja `LATENCIA`, incrementar el `ANCHO de BANDA` y maximizar la habilidad de `RECUPERACIÓN` en caso de `FAIL`**.
+
+**SOFTWARE RAID**
+
+* Implementa varios RAID LEVEL en el Kernel (**`SOFTWARE`**).
+
+* Es la más barata ya que no requieres controladores de disco o hot-swap chassis.
+
+* Linux Kernel contiene **`MD`** --> **`Multi Disc`** driver que permite **`RAID`**
+
 ### TIPOS DE RAID
 
 #### RAID 0
+
+**`STRIPING`**.
+
+* Orientado
 
 #### RAID 1
 
