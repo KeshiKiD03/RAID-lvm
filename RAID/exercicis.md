@@ -34,6 +34,8 @@
 * mount /dev/md0 /mnt/ --> Muntem el RAID a /mnt
 * cp -r /boot/ /mnt/ --> Copiem dades al directori que hem muntat.
 * df -h --> Comprobem el 'disk free'
+
+
 * mdadm --detail --scan --> Veiem l'array creada per el RAID
 * mdadm --detail /dev/md0 --> Veiem els details del RAID
 * mdadm --query /dev/loop0 --> Examinem el device /loop0 i comprobem si és de tipus 'md' (No ho és, llavors donarà error)
@@ -44,6 +46,8 @@
 * mdadm --detail /dev/md0 --> Veiem els details del RAID
 
 **State: clean, degraded --> clean perquè hi ha 2 funcionant i hi ha redundancia de dades (o s'han perdut) i degraded per la partició que s'ha espatllat**
+
+---
 
 * mdadm /dev/md0 --remove /dev/loop1 --> Ara que ja ha fallta, l'eliminem del RAID (ho fa en calent)
 

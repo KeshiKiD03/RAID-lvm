@@ -383,29 +383,48 @@ cat /proc/mdstat # --> Observamos los diferentes tipos de RAID y vemos cuales te
 # También que particiones virtuales tiene asociadas
 ```
 
-**6. PROVOCAR FAIL AL /DEV/LOOP1**
+### 3. Errada i recuperació
+
+* mdadm /dev/md0 --fail /dev/loop1
+* mdadm /dev/md0 --remove /dev/loop1
+* mdadm --manage /dev/md0 --add /dev/loop3
+
+**1. PROVOCAR FAIL AL /DEV/LOOP1**
 ```bash
 mdadm /dev/md0 --fail /dev/loop1 # --> Simula un ERROR del LOOP1 (AL SER RAID1 NO PASA NADA YA QUE SON MIRRORS!!!)
 ```
 
-**7. SE COMPRUEBA EL ESTADO EN /PROC/MDSTAT AFTER FAIL**
+**2. SE COMPRUEBA EL ESTADO EN /PROC/MDSTAT AFTER FAIL**
 ```bash
 cat /proc/mdstat # --> Observamos los diferentes tipos de RAID y vemos cuales tenemos creadas.
 # También que particiones virtuales tiene asociadas
 # Comprobamos AFTER FAIL
 ```
 
-**8. DETAIL /DEV/MD0 (DETALLES RAID1) AFTER FAIL**
+**3. DETAIL /DEV/MD0 (DETALLES RAID1) AFTER `FAIL`**
 ```bash
 mdadm --detail /dev/md0 # --> Vemos los DETALLES creados por el RAID1.
 # Comprobamos AFTER FAIL
 ```
 
-### 3. Errada i recuperació
+**State: `clean`,` degraded` --> `clean` perquè hi ha `2 funcionant` i hi ha `redundancia` de dades (o s'han perdut) i `degraded` per la partició que s'ha `espatllat`**
 
-* mdadm /dev/md0 --fail /dev/loop1
-* mdadm /dev/md0 --remove /dev/loop1
-* mdadm --manage /dev/md0 --add /dev/loop3
+**4. REMOVE DE /DEV/MD0 EL DISCO FALLADO /DEV/LOOP1 (AFTER FAIL)**
+```bash
+mdadm /dev/md0 --remove /dev/loop1 # --> Ahora que ha fallado, se retira del RAID (SE HACE EN CALIENTE)
+# Comprobamos AFTER FAIL
+```
+
+`mdadm: hot removed /dev/loop1 from /dev/md0`
+
+**5. SE COMPRUEBA EL ESTADO EN /PROC/MDSTAT AFTER `RETIRO`**
+```bash
+cat /proc/mdstat # --> Observamos los diferentes tipos de RAID y vemos cuales tenemos creadas.
+# También que particiones virtuales tiene asociadas
+# Comprobamos AFTER FAIL
+```
+
+
 
 ### 4. Aturar / Engegar el RAID
 
