@@ -72,7 +72,7 @@
 
     * Las **`posibilidades`** de `recuperar información` en un disco averiado es `0` en un RAID0.
 
-[RAID0](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/Raid-0.jpg)
+![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/Raid-0.jpg)
 
 
 #### RAID 1
