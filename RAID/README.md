@@ -34,6 +34,8 @@
 
 * RAID permite que la información se **`propague`** en diferentes discos.
 
+* El **`OBJETIVO`** del RAID es dividir y replicar la información en diferentes discos duros, y a parte incrementar la **`FIABILIDAD`** de la **`TRANSFERENCIA`**.
+
 * RAID usa técnicas como:
 
     * **`RAID0 --> Disk striping.`**.
@@ -54,11 +56,13 @@
 
 ### TIPOS DE RAID
 
-#### RAID 0
+#### RAID 0 (Performance)
 
 **`RAID0 = STRIPING / VOLUMEN DIVIDIDO`**.
 
 * Orientado a striping o **distribución por bandas**.
+
+**`NO TIENE REDUNDANCIA`**
 
 * Los discos deben tener el **`mismo tamaño`** o uno **`mayor que otro`**.
 
@@ -75,9 +79,9 @@
 ![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/Raid-0.jpg)
 
 
-#### RAID 1
+#### RAID 1 (Redundancy)
 
-**`RAID0 = MIRRORING / VOLUMEN ESPEJO`**.
+**`RAID1 = MIRRORING / VOLUMEN ESPEJO`**.
 
 * Orientado a espejo o **distribución por igual**.
 
@@ -152,7 +156,7 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Raid3.png/800px-Raid3.png?20100124125409)
 
-#### RAID 4
+#### RAID 4 (Error Checking)
 
 **`RAID4 = RAID3 + PARIDAD (EN BLOQUES) - NO RECOMENDABLE`**.
 
@@ -172,13 +176,17 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 
 * El almacenamiento de RAID 4 es lo mismo que el **`miembro más pequeño`**.
 
-#### RAID 5
+![](https://static.thegeekstuff.com/wp-content/uploads/2011/12/raid4.png)
 
-**`RAID5 = RAID4 + PARIDAD REPARTIDA - MIN 3 DISCOS`**.
+#### RAID 5 (Distributed Error Checking)
+
+**`RAID5 = RAID4 + PARIDAD REPARTIDA (STRIPPING CON PARIDAD) - MIN 3 DISCOS`**.
 
 * Lo mismo que el RAID4, pero las PARIDADES se reparten por **`TODOS LOS DISCOS`**
 
-* Es el modo RAID más utilo cuando uno desea COMBINAR un mayor número de DISCOS y todavía conservar REDUNDANCIA.
+* Es el modo RAID **`más util`** cuando uno desea **`COMBINAR`** un mayor número de **`DISCOS`** y todavía conservar **`REDUNDANCIA`**.
+
+* La **`CAPACIDAD`** de almacenamiento se SIEMPRE equilamente a la **`SUMA`** de todos los **`DISCOS`** menos **`UNO`**
 
 * **Si uno de los datos falla, todos los `datos permanecerán` intactos, gracias a la `información de paridad`**.
 
@@ -200,19 +208,36 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 
 * La **`PARIDAD`** está repartida a los **`3 discos`** y acabamos perdiendo **`1TB`**
 
-#### RAID 6
+![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/RAID-5.jpg)
+
+![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/RAID-5.jpg)
+
+
+#### RAID 6 (Redundant Error Checking)
+
+**`RAID5 = STRIPPING CON PARIDAD DOBLE`**.
 
 * Lo mismo que el **`RAID5`** pero a la hora de repartir los datos a todos los discos, se reparten **`más paridades`** (Dos paridades por DISCO DURO).
 
 * **`SÓLO PUEDEN FALLAR 2 DISCOS!`**
 
+![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/RAID-6.jpg)
+
 #### RAID 0+1:
+
+* RAID 1 + 0 hace **`STRIPPING y ESPEJO al MISMO TIEMPO`**
+
+    * Se **`dividen`** en **`2 discos`** para aumentar la velocidad.
+
+    * Al mismo tiempo están **`duplicadas`** en un otro disco, como mínimo. 
 
 * Fem un RAID 1 sobre dos RAID 0 (tenim 4 discos d'1TB cadascún --> en total 4TB però aprofitables / útils només 2TB)
 
 * Com fa el RAID 0, tindrem qúadruple (en aquest cas) de velocitat a l'hora de llegir i el doble a l'hora d'escriure
 
-* NOMÉS PODEN FALLAR COM A MÀXIM 2 DISCOS (DEL MATEIX COSTAT!) --> NO POT FALLAR 1 DISC PER CADA COSTAT.
+* **`NOMÉS PODEN FALLAR COM A MÀXIM 2 DISCOS (DEL MATEIX COSTAT!) `**--> NO POT FALLAR 1 DISC PER CADA COSTAT.
+
+![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/Raid-10.png)
 
 #### RAID 10:
 
@@ -222,13 +247,18 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 
 * NOMÉS POT FALLAR 1 PER CADA COSTAT (JA QUE SÓN UNA CÒPIA IDÈNTICA)
 
+![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/Raid-10.png)
 
-#### LINEAR RAID
-
-
-
+![](https://github.com/KeshiKiD03/lvm/blob/main/Photos/raid6.png)
 
 
+### IMPORTANT:
+```yaml
+* dm --> device mapper (dispositiu que fa una assignació (taula de correspondència) entre els discos que ens inventem contra els real)
+* md --> multi-disk = RAID
+* Magin : <number> --> identifica la partició
+```
+------------------------------------
 
 # Pràctiques RAID:
 
@@ -236,7 +266,87 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 
 ### 1. CREAR EL RAID
 
-* mdadm --create /dev/md0 --chunk=4 --level=1 --raid-devices=3 /dev/loop0 /dev/loop1 /dev/loop2
+**`EJEMPLO DE CREACIÓN DE UN RAID1`**
+```yaml
+mdadm --create /dev/md0 --chunk=4 --level=1 --raid-devices=3 /dev/loop0 /dev/loop1 /dev/loop2
+```
+
+------------------------------------
+
+**1. CREAR FICHEROS DE IMAGEN**
+```yaml
+dd if=/dev/zero of=disk01.img bs=1k count=100K ; 
+dd if=/dev/zero of=disk02.img bs=1k count=100K ; 
+dd if=/dev/zero of=disk03.img bs=1k count=100K # --> Crear ficheros de IMAGEN de un DISCO VIRTUAL
+```
+
+**2. ASIGNAR A LOOPBACK**
+```
+losetup /dev/loop0 /opt/lvm/disk01.img ;
+losetup /dev/loop1 /opt/lvm/disk02.img ;
+losetup /dev/loop2 /opt/lvm/disk03.img
+```
+
+**3. VERIFICAR**
+```
+losetup -a
+```
+
+**4. CREAR RAID1**
+```
+mdadm --create /dev/md0 --chunk=4 --level=1 --raid-devices=3 /dev/loop0 /dev/loop1 /dev/loop2
+```
+
+**5. VERIFICAR**
+```
+tree /dev/disk
+```
+
+
+`| |-- md-name-portatil.localdomain:0 -> ../../md0`
+
+`| | -- md-uuid-b5fd01dc:53a820d3:190ae832:4f3144f8 -> ../../md0`
+
+**7. FORMATEAR**
+
+* Disponemos de un dispositivo **`/dev/md0`** --> **RAID1** formado por las 3 particiones **`LOOP0, LOOP1, LOOP2.`**
+
+* Se trata de un RAID de NIVEL1 con 3 discos **`ESPEJO / MIRRORING`**
+
+* Ahora hay que añadirle un **`SISTEMA de FICHEROS / FORMATEARLO`** y **`MONTARLO al FILESYSTEM`**
+
+* Se monta a **`/mnt`** por ejemplo.
+
+* Se copian los datos de **`/boot`** por ejemplo.
+
+* Observar el almacenamiento con **`df`**.
+
+```
+mkfs -t ext4 /dev/md0 # --> Formatea el RAID1 del tipo EXT4
+```
+
+```
+blkid # --> Dice el ID de cada ELEMENTO de HARDWARE, aunque sea VIRTUAL (Crea Block Device Atributes).
+```
+
+`/dev/md0: UUID="005caef9-e1e0-429a-bc81-7fcb5ba290cb" TYPE="ext4"`
+
+```
+mount /dev/md0 /mnt/
+```
+
+```
+cp -r /boot/ /mnt/
+```
+
+```
+
+```
+
+```
+
+```
+
 
 ### 2. Examinar el RAID
 
