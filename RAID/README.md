@@ -424,6 +424,40 @@ cat /proc/mdstat # --> Observamos los diferentes tipos de RAID y vemos cuales te
 # Comprobamos AFTER FAIL
 ```
 
+**6. SE VUELVE A GENERAR OTRO DISCO VIRTUAL**
+```bash
+dd if=/dev/zero of=disk04.img bs=1k count=100k # --> Creem un altre imatge per afegir-la al RAID
+```
+
+**7. SE AÑADE LA IMAGEN AL LOOPBACK**
+```bash
+losetup /dev/loop3 disk04.img # --> Afegim la nova imatge al loopback
+```
+
+**8. AÑADIR EL NUEVO LOOPBACK (/DEV/LOOP3) A RAID**
+```bash
+* mdadm --manage /dev/md0 --add /dev/loop3 # --> Afegim el nou loopback al RAID --> 'manage' opcional
+```
+
+**Quan afegim un disc nou, en `background` va fent tota la '`pesca`' de sincronització (va volcant les dades del mirror)**
+
+**9. SE COMPRUEBA EL ESTADO EN /PROC/MDSTAT AFTER `ADD DE /DEV/LOOP3`**
+```bash
+cat /proc/mdstat # --> Observamos los diferentes tipos de RAID y vemos cuales tenemos creadas.
+# También que particiones virtuales tiene asociadas
+# Comprobamos AFTER ADD /DEV/LOOP3
+```
+
+`loop3[3]`
+
+**3. DETAIL /DEV/MD0 (DETALLES RAID1) AFTER `ADD DE /DEV/LOOP3`**
+```bash
+mdadm --detail /dev/md0 # --> Vemos los DETALLES creados por el RAID1.
+# Comprobamos AFTER ADD /DEV/LOOP3
+```
+
+`active sync /dev/loop3`
+
 
 
 ### 4. Aturar / Engegar el RAID
