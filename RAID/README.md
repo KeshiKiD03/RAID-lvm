@@ -274,7 +274,7 @@ mdadm --create /dev/md0 --chunk=4 --level=1 --raid-devices=3 /dev/loop0 /dev/loo
 ------------------------------------
 
 **1. CREAR FICHEROS DE IMAGEN**
-```yaml
+```bash
 dd if=/dev/zero of=disk01.img bs=1k count=100K ; 
 dd if=/dev/zero of=disk02.img bs=1k count=100K ; 
 dd if=/dev/zero of=disk03.img bs=1k count=100K # --> Crear ficheros de IMAGEN de un DISCO VIRTUAL
