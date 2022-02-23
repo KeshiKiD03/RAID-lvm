@@ -56,9 +56,11 @@
 
 #### RAID 0
 
-**`STRIPING`**.
+**`RAID0 = STRIPING`**.
 
-* Orientado
+* Orientado a striping o **distribución por bandas**.
+
+* Los discos deben tener el **`mismo tamaño`** o uno **`mayor que otro`**.
 
 #### RAID 1
 
