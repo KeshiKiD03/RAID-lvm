@@ -210,7 +210,7 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 
 ![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/RAID-5.jpg)
 
-![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/RAID-5.jpg)
+![](https://www.intel.com/content/dam/support/us/en/images/chipsets/imsm/sb/img/raid5.jpg)
 
 
 #### RAID 6 (Redundant Error Checking)
