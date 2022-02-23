@@ -223,7 +223,7 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 
 ![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/RAID-6.jpg)
 
-#### RAID 0+1:
+#### RAID 0+1 (RAID10):
 
 * RAID 1 + 0 hace **`STRIPPING y ESPEJO al MISMO TIEMPO`**
 
