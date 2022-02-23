@@ -355,6 +355,31 @@ df -h # --> Muestra el DISK FREE.
 * mdadm --examine /dev/loop0
 * cat /proc/mdstat
 
+```bash
+mdadm --detail --scan # --> Observamos los detalles del RAID1.
+```
+* mdadm --detail /dev/md0
+
+```bash
+
+```
+
+* mdadm --query /dev/loop0
+
+```bash
+
+```
+* mdadm --examine /dev/loop0
+
+```bash
+
+```
+* cat /proc/mdstat
+
+```bash
+
+```
+
 ### 3. Errada i recuperació
 
 * mdadm /dev/md0 --fail /dev/loop1
