@@ -5,15 +5,29 @@
 
 ## INDEX
 
-* **RAID**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+* **RAID**: [LVM](https://github.com/KeshiKiD03/lvm/tree/main/RAID#raid)
 
-    * **RAID**: [RAID](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+    * **¿QUÉ ES RAID?**: [WHAT IS RAID](https://github.com/KeshiKiD03/lvm/tree/main/RAID#raid)
 
-    * **RAID**: [RAID](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+* **TIPOS DE RAID**: [RAID TYPES](https://github.com/KeshiKiD03/lvm/tree/main/RAID#tipos-de-raid)
 
-    * **RAID**: [RAID](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+    * **RAID 0**: [RAID0](https://github.com/KeshiKiD03/lvm/tree/main/RAID#raid-0-performance)
 
-    * **RAID**: [RAID](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+    * **RAID 1**: [RAID1](https://github.com/KeshiKiD03/lvm/tree/main/RAID#raid-1-redundancy)
+
+    * **RAID 2**: [RAID2](https://github.com/KeshiKiD03/lvm/tree/main/RAID#raid-2)
+
+    * **RAID 3**: [RAID3](https://github.com/KeshiKiD03/lvm/tree/main/RAID#raid-3)
+
+    * **RAID 4**: [RAID4](https://github.com/KeshiKiD03/lvm/tree/main/RAID#raid-4-error-checking)
+
+    * **RAID 5**: [RAID5](https://github.com/KeshiKiD03/lvm/tree/main/RAID#raid-5-distributed-error-checking)
+
+    * **RAID 6**: [RAID6](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+
+    * **RAID 0+1**: [RAID0+1](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+
+    * **RAID 1+0**: [RAID1+0](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
 
     * **RAID**: [RAID](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
 
@@ -159,6 +173,8 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 * Si **`perdemos uno`** de los discos, **`podremos recuperarlo`** mediante el **`bit de paridad`**
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Raid3.png/800px-Raid3.png?20100124125409)
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #### RAID 4 (Error Checking)
 
