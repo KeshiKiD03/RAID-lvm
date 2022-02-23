@@ -634,6 +634,194 @@ root@i11:/mnt/dades#
 
 ### Ejercicio Práctico 2: `Modificaciones en Caliente`
 
+* La principal ventaja de utilización de LVM es que se puede modificar en **`caliente`**.
+
+    * Se pueden modificar las composiciones de los **`grupos de volúmenes`**.
+
+    * Se pueden hacer un *`resize`* de los volúmenes lógicos.
+
+    * Esto es lo que se puede hacer:
+
+        * Ampliar el Volume Group **`diskedt`** añadiendo **`100M`** procedente de /dev/loop2.
+
+        * Si el Volume Group diskedt dispone de más espacio libre, se puede **`asignar`** ese espacio a los volúmenes lógicos --> **`datos`**, **`sistema`** o crear un **`nuevo vol lógico`**.
+
+        * Si no se añade espacio nuevo a **`diskedt`**, se puede **`redistribuir`** su espacio libre.
+
+            * Se puede **`repartir su espacio`** entre sus **`2`** particiones lógicas de forma diferente. 
+
+                * Sin tener que **`borrar`** y **`crear de nuevo`**.
+
+        * En todo momento, los LV se pueden **`redimensionar`**:
+
+            * **`ampliandolos`**.
+
+            * **`reduciendolos (shrink)`**, 
+            
+            * **`siempre y que los datos quepan`**
+
+
+#### **`IMPORTANTE`**
+
+* Es importante remarcar que si queremos **`redimensionar`** una **`LV`**, hay que redimensionar también su **`SISTEMA DE FICHEROS`**
+
+
+#### **``Modificaciones en Caliente``**
+
+1. Asignar **`100M`** de **`/dev/loop2`** al grupo **`/dev/diskedt`**
+
+    2. Añadir 30M de este nuevo espacio al volúmen lógico: *`sistema`*.
+
+2. Crear una nueva partición lógica llamada *`services`* de 60M con el **`espacio sobrante`** del VG **`diskedt`**.
+
+3. Redimensionar un LV:
+
+    * Haciéndolo más pequeño (**`shrink`**) el LV *`sistema`*.
+
+4. Con el espacio liberado de *`sistema`*, y el espacio libre sobrante del volúmen *`diskedt`*, *`ampliar`* el espacio del volúmen lógico *`datos`*.
+
+
+#### **``PRIMERA PART``**
+
+**Ara simularem que afegim un nou D.D:**
+
+* **`vgextend diskedt /dev/loop2`**
+
+    * Afegim el D.D al 'VOlume Group' de 'diskedt'
+
+* **`vgdisplay diskedt`**
+
+    * Llistem el 'Volume Group'
+
+* **`lvextend -L +30 /dev/diskedt/sistema /dev/loop2`**
+
+    * Ara repartirem aquest espai lliure per assignar ampliant en 30M la partició 'sistema'
+
+* **`lvdisplay /dev/diskedt/sistema`** 
+
+    * Llistem el 'Logical Volume' de 'sistema', ara ocupa 1 segment més (2) i ocupa 21 unitats d'assignació 'PE' de 4M (21 * 4 = 84 MiB)
+
+* **`df -h`** 
+
+    * Llistem l'espai disponible.
+
+<opcional>
+
+* **`umount /mnt/dades`**
+
+    * Desmuntem el directori de 'dades'... (no cal ja que farem un grow amb resize)
+
+* **`umount /mnt/sistema`**
+
+    * Desmuntem el directori de 'sistema'... (ídem)
+
+-------
+
+* **`e2fsck -f /dev/diskedt/sistema`**
+
+    * Comprovem i reparem el sistema d'arxius de 'sistema'
+
+* **`resize2fs /dev/diskedt/sistema`**
+
+    * Agrandem el tamany de les dades fins el màxim que és pugui.
+
+* **`df -h`**
+
+* **`mount /dev/diskedt/dades /mnt/dades`**
+
+* **`mount /dev/diskedt/sistema /mnt/sistema`**
+
+**Ara, comprobem i veiem que tenim espai utilitzable quan abans no teníem res (hem agrandat l'espai utilitzable)**
+
+#### **``SEGONA PART``**
+
+* df -h
+
+/dev/mapper/diskedt-dades    131M   65M   56M  54% /mnt/dades
+
+/dev/mapper/diskedt-sistema   78M   46M   26M  65% /mnt/sistema
+
+* **`lvcreate -L 60 -n services /dev/diskedt`** --> Creem una nova partició lògica anomenada 'services'
+
+* **`lvdisplay /dev/diskedt/services `**--> La llistem..
+
+**Ara el volum 'diskedt' disposa de 300M repartits a 80M per a sistema (50 + 30), 150M per a dades i 60M per al nou volum lògic 'services'**
+
+* **`vgdisplay /dev/diskedt`** --> Llistem el volum lògic 'diskedt'
+
+
+#### **``TERCERA PART``**
+
+**Volem traspassar tot l'espai a la partició de 'dades':**
+
+* **`umount /mnt/dades`**
+
+* **`umount /mnt/sistema`**
+
+**Primer reduïm la partició 'sistema' i després el volum lògic 'sistema':**
+
+* **`e2fsck -f /dev/diskedt/sistema`**
+
+* **`resize2fs /dev/diskedt/sistema [85M]`** --> Reduïm fins a 85M (important fixar-se en la mida mínima a la que s'ha de reduïr)
+
+* **`lvreduce -L 85M -r /dev/diskedt/sistema`** --> Ara reduïrem el volum lògic
+
+* **`lvdisplay /dev/diskedt/sistema`** --> Comprobem
+
+* **`mount /dev/diskedt/sistema /mnt/sistema/`**
+
+* **`mount /dev/diskedt/dades /mnt/dades/`**
+
+* **`df -h`** --> Comprobem l'espai disponible
+
+#### **``CUARTA PART``**
+
+**Assignem al volum 'dades' tot l'espai sobrant:**
+
+* **`vgdisplay diskedt`** --> Llistem el 'Volume Group' 'diskedt' (important fixar-se en 'Free PE' per veure quan agrandarà)
+
+* **`lvdisplay /dev/diskedt/dades`** --> Llistem el 'Logical Volume' 'dades'
+
+* **`umount /mnt/sistema`**
+
+* **`umount /mnt/dades`**
+
+* **`lvextend -l +100%FREE /dev/diskedt/dades`** --> Extendrà de 140MiB a 144MiB.
+
+**Coses a mirar per l'exàmen:**
+
+* **`man LV (-l, -L)`**
+
+* **`sudo lvreduce -L 25M -r /dev/diskedt/sistema --> -r (fa el resize2fs)`**
+
+**Pràctica:**
+
+* **`dd if=/dev/zero of=disk04.img bs=1k count=500k`**
+
+* **`sudo losetup /dev/loop4 disk04.img`**
+
+* **`sudo losetup -a`**
+
+* **`sudo pvcreate /dev/loop4`**
+
+* **`sudo vgextend diskedt /dev/loop4`**
+
+* **`sudo lvdisplay /dev/diskedt/dades`**
+
+* **`sudo lvdisplay /dev/diskedt/sistema`**
+
+* **`sudo pvdisplay /dev/loop1`**
+
+* **`sudo pvmove /dev/loop1 /dev/loop2 /dev/loop3`** --> Ho mou on troba 'PE' lliures, ho mourà on sigui.
+
+* **`sudo vgreduce diskedt /dev/loop1 /dev/loop2 /dev/loop3`** --> Primer treiem el 'PV' de 'loop1' del grup ja que encara que no tingui capespai ocupat, segueix estant conectat amb el 'VG'.
+
+* **`sudo pvremove /dev/loop1 /dev/loop2 /dev/loop3`**
+
+* **`sudo lvextend -L +200M -r /dev/diskedt/dades`** --> Extenem 200M i fem el resize (-r)
+
+* **`df -h`** --> Comprovem
+
 
 
 ## RAID
