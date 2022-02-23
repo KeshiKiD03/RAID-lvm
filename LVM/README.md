@@ -5,20 +5,29 @@
 
 ## INDEX
 
-* **LVM**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+* **LVM**: [LVM](https://github.com/KeshiKiD03/lvm/tree/main/LVM#lvm)
 
-    * **LVM**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+    * **LVM: Resumen**: [Resumen](https://github.com/KeshiKiD03/lvm/tree/main/LVM#resumen)
 
-    * **LVM**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+    * **LVM: Ejercicio 1**: [EJ1](https://github.com/KeshiKiD03/lvm/tree/main/LVM#ejercicio-pr%C3%A1ctico-1-usar-lvm)
 
-    * **LVM**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+    * **LVM: Ejercicio 1: PV**: [PV](https://github.com/KeshiKiD03/lvm/tree/main/LVM#pv-physical-volumes----crea-vol%C3%BAmenes-f%C3%ADsicos)
 
-    * **LVM**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+    * **LVM: Ejercicio 1: VG**: [PV](hhttps://github.com/KeshiKiD03/lvm/tree/main/LVM#vg-volume-groups----agrupa-vol%C3%BAmenes-f%C3%ADsicos)
 
-    * **LVM**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+    * **LVM: Ejercicio 1: LV**: [PV](https://github.com/KeshiKiD03/lvm/tree/main/LVM#lv-logical-volume----crea-vol%C3%BAmenes-l%C3%B3gicos)
 
-    * **LVM**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+    * **LVM: Ejercicio 1: Mount**: [Mount](https://github.com/KeshiKiD03/lvm/tree/main/LVM#mfks-mkfs--montarlo-mount---etcfstab--poner-datos)
 
+    * **LVM: Ejercicio 2: Modificaciones en Caliente**: [Hot Swap](https://github.com/KeshiKiD03/lvm/tree/main/LVM#ejercicio-pr%C3%A1ctico-2-modificaciones-en-caliente)
+
+    * **LVM: Ejercicio 2: Modificaciones en Caliente PART1**: [Hot Swap 1](https://github.com/KeshiKiD03/lvm/tree/main/LVM#primera-part)
+
+    * **LVM: Ejercicio 2: Modificaciones en Caliente PART2**: [Hot Swap 2](https://github.com/KeshiKiD03/lvm/tree/main/LVM#segona-part)
+
+    * **LVM: Ejercicio 2: Modificaciones en Caliente PART3**: [Hot Swap 3](https://github.com/KeshiKiD03/lvm/tree/main/LVM#tercera-part)
+
+    * **LVM: Ejercicio 2: Modificaciones en Caliente PART3**: [Hot Swap 4](https://github.com/KeshiKiD03/lvm/tree/main/LVM#cuarta-part)
 
 ## LVM
 
