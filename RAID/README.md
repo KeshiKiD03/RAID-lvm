@@ -356,8 +356,9 @@ df -h # --> Muestra el DISK FREE.
 * cat /proc/mdstat
 
 ```bash
-mdadm --detail --scan # --> Observamos los detalles del RAID1.
+mdadm --detail --scan # --> Vemos el ARRAY creada por el RAID.
 ```
+
 * mdadm --detail /dev/md0
 
 ```bash
