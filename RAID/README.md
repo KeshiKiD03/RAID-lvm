@@ -109,18 +109,119 @@
 
         * Puesto que se copia la misma información en todos los discos, cada disco tiene un precio.
 
+![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/Raid-1.jpg)
 
 #### RAID 2
 
+**`RAID2 = RAID0 + RAID1`**.
+
+* RAID0 y RAID1 a la vez.
+
+* Se calcula con el código de Hamming.
+
+* **Paridad de HAMMING**
+
+![](https://www.profesionalreview.com/wp-content/uploads/2019/01/RAID-2.png)
+
+
+#### PARIDAD
+
+**PARIDAD**: Para explicarlo de una forma sencilla, la paridad es la suma de todos los dispositivos utilizados en una matriz. 
+
+Recuperarse del fallo de dispositivo es posible leyendo los datos buenos que quedan y comparándolos con el dato de paridad almacenado en el conjunto. 
+
+La paridad es usada por los niveles de RAID 2, 3, 4 y 5. 
+
+RAID 1 no utiliza la paridad puesto que todos los datos están completamente duplicados al tratarse de un espejo.
+
 #### RAID 3
+
+**`RAID3 = RAID0 + PARIDAD (EN BYTES)`**.
+
+* Es redundante.
+
+* Usa **`data striping`** con un **`disco de paridad`** dedicado.
+
+* Necesita mínimo 3 discos.
+
+* Permite tasas de transferencia **ALTAS**.
+
+* Se usan **`2 discos tipo RAID0`** y uno para **`PARIDAD`**.
+
+* Si **`perdemos uno`** de los discos, **`podremos recuperarlo`** mediante el **`bit de paridad`**
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Raid3.png/800px-Raid3.png?20100124125409)
 
 #### RAID 4
 
+**`RAID4 = RAID3 + PARIDAD (EN BLOQUES) - NO RECOMENDABLE`**.
+
+* Parecido al RAID3, excepto porque divide a nivel de **`BLOQUES`** en lugar de **`BYTES`**.
+
+* Todas las paridades están en el **`MISMO DISCO`**.
+
+* La **`PARIDAD`** --> Es un archivo que con un cálculo puede recuperar lo que haga falta.
+
+    * Ejemplo: (EX (Disc, Disc, Paritat): 7 4 28 --> x 4 28 --> sap que el que falta és 7)
+
+* El problema que tiene es que genera un **`CUELLO de BOTELLA`** teniendo un **`SOLO DISCO COMO PARIDAD`**.
+
+* RAID4 NO SE UTILIZA, por el tema del **`CUELLO DE BOTELLA`**.
+
+    * **SOLO PUEDE FALLAR UN DISCO**
+
+* El almacenamiento de RAID 4 es lo mismo que el **`miembro más pequeño`**.
+
 #### RAID 5
+
+**`RAID5 = RAID4 + PARIDAD REPARTIDA - MIN 3 DISCOS`**.
+
+* Lo mismo que el RAID4, pero las PARIDADES se reparten por **`TODOS LOS DISCOS`**
+
+* Es el modo RAID más utilo cuando uno desea COMBINAR un mayor número de DISCOS y todavía conservar REDUNDANCIA.
+
+* **Si uno de los datos falla, todos los `datos permanecerán` intactos, gracias a la `información de paridad`**.
+
+* **Si `dos discos` `fallan` simultáneamente, `todos los discos permanecerán`. RAID5 puede sobrevivir a un `fallo de disco`.**
+
+* **SÓLO PUEDE FALLAR UN DISCO**
+
+* **Es la que más se usa**
+
+* **`RAID5 elimina`** el **`CUELLO DE BOTELLA`** que generaba RAID4.
+
+* Si falla alguno, la RAID5 se puede calcular y corregir.
+
+**EJEMPLO**
+
+**Si tengo 3 DISCOS de 1TB a RAID5, ¿Cuanta capacidad de almacenamiento tengo?**
+
+* **`2TB`**. 
+
+* La **`PARIDAD`** está repartida a los **`3 discos`** y acabamos perdiendo **`1TB`**
 
 #### RAID 6
 
-#### RAID 10
+* Lo mismo que el **`RAID5`** pero a la hora de repartir los datos a todos los discos, se reparten **`más paridades`** (Dos paridades por DISCO DURO).
+
+* **`SÓLO PUEDEN FALLAR 2 DISCOS!`**
+
+#### RAID 0+1:
+
+* Fem un RAID 1 sobre dos RAID 0 (tenim 4 discos d'1TB cadascún --> en total 4TB però aprofitables / útils només 2TB)
+
+* Com fa el RAID 0, tindrem qúadruple (en aquest cas) de velocitat a l'hora de llegir i el doble a l'hora d'escriure
+
+* NOMÉS PODEN FALLAR COM A MÀXIM 2 DISCOS (DEL MATEIX COSTAT!) --> NO POT FALLAR 1 DISC PER CADA COSTAT.
+
+#### RAID 10:
+
+* Fem un RAID 0 sobre dos RAID 1 (tenim 4 discos d'1TB cadascún --> en total 4TB però aprofitables / útils només 2TB)
+
+* Ídem al RAID 0 (quàdruple de lectura i doble d'escriptura)
+
+* NOMÉS POT FALLAR 1 PER CADA COSTAT (JA QUE SÓN UNA CÒPIA IDÈNTICA)
+
 
 #### LINEAR RAID
 
