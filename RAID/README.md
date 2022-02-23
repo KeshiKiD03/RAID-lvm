@@ -56,13 +56,59 @@
 
 #### RAID 0
 
-**`RAID0 = STRIPING`**.
+**`RAID0 = STRIPING / VOLUMEN DIVIDIDO`**.
 
 * Orientado a striping o **distribución por bandas**.
 
 * Los discos deben tener el **`mismo tamaño`** o uno **`mayor que otro`**.
 
+* Distribuye los datos equitativamente entre **`DOS`** o más discos **`SIN INFORMACIÓN DE PARIDAD`** que proporcione **`REDUNDANCIA`**.
+
+* Incrementa el **`rendimiento`**.
+
+* Inconvenientes:
+
+    * No existe **control de paridad** ni **tolerancia a fallos** --> No existe una garantía de **`integridad de datos`**.
+
+    * Las **`posibilidades`** de `recuperar información` en un disco averiado es `0` en un RAID0.
+
+[RAID0](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/Raid-0.jpg)
+
+
 #### RAID 1
+
+**`RAID0 = MIRRORING / VOLUMEN ESPEJO`**.
+
+* Orientado a espejo o **distribución por igual**.
+
+* Primer modo que realmente tiene **`REDUNDANCIA`**.
+
+* Si uno de los discos **`FALLA`**, los datos permanecerán **`INTACTOS`** puesto que se dispone otro disco.
+
+* **`Rendimiento`** de las lecturas es la **`SUMA`** de los rendimientos de los discos.
+
+* Crea una **`copia exacta`** de un conjunto de datos en **`dos`** o **`más discos`**. 
+
+* Resulta útil cuando el **`rendimiento en lectura`** es más importante que la **`capacidad`**.
+
+* RAID1 sólo puede ser **tan grande** como el **más pequeño de sus discos**.
+
+    * Es decir, si tienen tamaños diferentes, se quedará con el tamaño del **`más pequeño`**.
+
+    * Ya que se trata de una **`COPIA DE OTRO DISCO`**, entonces su **`TAMAÑO`** será **`IGUAL`**.
+
+    * Si tenemos **3 discos** de **1TB**, la capacidad que tendremos es **`1TB`** --> **`PORQUE ES UNA COPIA`**.
+
+* Para **PERDER LOS DATOS**, tienen que **FALLAR TODOS los DISCOS**.
+
+    * Así no tendremos un **`SISTEMA REDUNDANTE`**
+
+* Inconvenientes:
+
+    * **Costoso**.
+
+        * Puesto que se copia la misma información en todos los discos, cada disco tiene un precio.
+
 
 #### RAID 2
 
