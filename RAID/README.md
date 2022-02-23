@@ -359,8 +359,6 @@ df -h # --> Muestra el DISK FREE.
 mdadm --detail --scan # --> Vemos el ARRAY creada por el RAID.
 ```
 
-* mdadm --detail /dev/md0
-
 ```bash
 
 ```
