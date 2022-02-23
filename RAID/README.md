@@ -284,25 +284,25 @@ dd if=/dev/zero of=disk03.img bs=1k count=100K # --> Crear ficheros de IMAGEN de
 ```
 
 **2. ASIGNAR A LOOPBACK**
-```
+```bash
 losetup /dev/loop0 /opt/lvm/disk01.img ;
 losetup /dev/loop1 /opt/lvm/disk02.img ;
-losetup /dev/loop2 /opt/lvm/disk03.img
+losetup /dev/loop2 /opt/lvm/disk03.img # --> Asocia un /dev/loopX a un DISCO (Físico o Virtual)
 ```
 
 **3. VERIFICAR**
-```
-losetup -a
+```bash
+losetup -a # --> Mostra els dispositius /dev/loopX
 ```
 
 **4. CREAR RAID1**
-```
+```bash
 mdadm --create /dev/md0 --chunk=4 --level=1 --raid-devices=3 /dev/loop0 /dev/loop1 /dev/loop2
 ```
 
 **5. VERIFICAR**
-```
-tree /dev/disk
+```bash
+tree /dev/disk # --> Árbol de los discos
 ```
 
 
@@ -324,30 +324,26 @@ tree /dev/disk
 
 * Observar el almacenamiento con **`df`**.
 
-```
+```bash
 mkfs -t ext4 /dev/md0 # --> Formatea el RAID1 del tipo EXT4
 ```
 
-```
+```bash
 blkid # --> Dice el ID de cada ELEMENTO de HARDWARE, aunque sea VIRTUAL (Crea Block Device Atributes).
 ```
 
 `/dev/md0: UUID="005caef9-e1e0-429a-bc81-7fcb5ba290cb" TYPE="ext4"`
 
-```
-mount /dev/md0 /mnt/
-```
-
-```
-cp -r /boot/ /mnt/
+```bash
+mount /dev/md0 /mnt/ # --> Montamos el RAID1 (Multiple Disk 0) a /mnt
 ```
 
+```bash
+cp -r /boot/ /mnt/ # --> Copiamos los datos recursivos de BOOT a /mnt
 ```
 
-```
-
-```
-
+```bash
+df -h # --> Muestra el DISK FREE.
 ```
 
 
