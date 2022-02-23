@@ -41,6 +41,10 @@
 * mdadm --query /dev/loop0 --> Examinem el device /loop0 i comprobem si és de tipus 'md' (No ho és, llavors donarà error)
 * mdadm --examine /dev/loop0 --> Ens dona informació de la partició virtual
 * cat /proc/mdstat --> Veiem els diferents tipus de RAIDs i veiem quins tenim creats i quines particions virtuals té associades
+
+
+
+
 * mdadm /dev/md0 --fail /dev/loop1 --> Simularem una errada del loop1 (Al ser RAID1 no passarà res ja que són còpies de si mateixos)
 * cat /proc/mdstat --> Comprovem l'status
 * mdadm --detail /dev/md0 --> Veiem els details del RAID
@@ -64,7 +68,10 @@ mdadm: hot removed /dev/loop1 from /dev/md0
 **Quan afegim un disc nou, en background va fent tota la 'pesca' de sincronització (va volcant les dades del mirror)**
 
 * mdadm --detail /dev/md0 --> Veiem els details del RAID
+
+
 * mdadm --stop /dev/md0 --> NO ENS DEIXARÀ PERQUÈ ELS LOOPBACKS ESTAN MUNTATS A /mnt
+
 * umount /mnt --> Desmuntem el directori /mnt per poder parar el RAID
 * mdadm --stop /dev/md0 --> Ara podrem parar el RAID
 
@@ -82,8 +89,11 @@ mdadm: giving up.
 * mdadm --assemble /dev/md0 --run /dev/loop2 /dev/loop3 /dev/loop4 --> Triem els dispositius que volem que utilitzi, si possem per exemple /dev/loop1, iniciara 2 en compte de 3
 
 * mdadm --detail --scan > /etc/mdadmin.conf --> Fiquem l'info del 'scan' al fitxer en questió (sabrà quin RAID ha d'arrancar, explicació + endevant)
+
 * mdadm --stop /dev/md0 --> Aturem el RAID
+
 * mdadm --assemble --scan
+
 * mdadm -v --zero-superblock /dev/loop1 /dev/loop2 /dev/loop3 /dev/loop4 --> Els hi treiem la marca (netejem)
 
 ### Pràctica 2 (RAID 1 + SPARE):

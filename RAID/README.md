@@ -351,6 +351,8 @@ df -h # --> Muestra el DISK FREE.
 
 ### 2. Examinar el RAID
 
+**`EJEMPLO DE EXAMINACIÓN DE RAID`**
+
 * mdadm --detail --scan
 * mdadm --detail /dev/md0
 * mdadm --query /dev/loop0
@@ -384,6 +386,8 @@ cat /proc/mdstat # --> Observamos los diferentes tipos de RAID y vemos cuales te
 ```
 
 ### 3. Errada i recuperació
+
+**`EJEMPLO DE FAIL Y RECUPERACIÓN RAID`**
 
 * mdadm /dev/md0 --fail /dev/loop1
 * mdadm /dev/md0 --remove /dev/loop1
@@ -462,14 +466,118 @@ mdadm --detail /dev/md0 # --> Vemos los DETALLES creados por el RAID1.
 
 ### 4. Aturar / Engegar el RAID
 
+Para encender **UN RAID** hay **`3 MECANISMOS`**:
+
+* Pedirle a MDADM que EXAMINE todas las **PARTICIONES DEL SISTEMA** (**`SCAN`**).
+
+    * Las particiones tienen un superblock --> Indica si son parte de un Array y de cual.
+
+* Indicar a **`MDADM`** que ajunte las particiones concretas que le indiquemos como *`ARGUMENTOS`*.
+
+    * **`FORZAR QUE USE PARTICIONES INDICADAS`**
+
+* Generar un fichero de configuración *`/etc/mdadm.conf`* donde hay la información necesaria para **`automatizar el RAID`**.
+
+    * Opción para poder encender los RAID al encender el **SISTEMA**.
+
+**`EJEMPLO DE PARAR Y ENCENDER RAID`**
+
 * mdadm --stop /dev/md0
 * mdadm --assemble --scan
 * mdadmin --assemble /dev/md0 --run /dev/loop0 /dev/loop1/dev/loop2
 * mdadm --detail --scan > /etc/mdadm.conf
 
+**1. PARAR EL RAID (NO DEJARÁ, ANTES UN UMOUNT)**
+```bash
+mdadm --stop /dev/md0 # --> NO ENS DEIXARÀ PERQUÈ ELS LOOPBACKS ESTAN MUNTATS A /mnt
+```
+
+**2. UMOUNT FIRST**
+```bash
+umount /mnt # --> Desmuntem el directori /mnt PRIMER per poder parar el RAID
+```
+
+**3. PARAR EL RAID (¡AHORA SI!)**
+```bash
+mdadm --stop /dev/md0 --> Ara SI podrem parar el RAID
+```
+
+
+**Les particions existeixen, però el RAID no apareix per exemple a 'tree /dev/disk'**
+
+**Hem **`d'eliminar`** la **`marca del RAID`** un cop desmuntat per quan engegui l'ordinador no intenti muntar-lo. Ordre: `mdadm -v  --zero-superblock /dev/loop[]`**
+
+**4. CANTIDAD DE DISCOS ACTIVOS (ASSEMBLE)**
+```bash
+mdadm --assemble --scan # --> Ens informa de amb quants dicos ha iniciat el RAID i ens informa de que l'array de md0 enacara està actiu ja que l'hem aturat, NO ELIMINAT!
+#  Examina TODAS LAS PARTICIONES DEL SISTEMA e INTENTA "ENSAMBLAR" TODAS AQUELLAS QUE CREE QUE FORMAN UN RAID
+```
+
+`mdadm: giving up`
+
+**`--assemble` (engega el RAID) | `--scan` (escaneja particions de RAID e intenta juntar)**
+
+**`Examina` el discos e intenta `deduir` les coses, està `trobant 4 particions` i las `assigna` al `/dev/md0` quan aquest té assignades realment `3`, i les engega amb les últimes 3 trobades (ho enten igualment amb aquestes 3), encara que haguessin 2, ho hauria engegat igualment.**
+
+**5. ESCOGER DISPOSITIVOS A UTILIZAR (ASSEMBLE)**
+```bash
+mdadm --assemble /dev/md0 --run /dev/loop2 /dev/loop3 /dev/loop4 # --> Triem els dispositius que volem que utilitzi, si possem per exemple /dev/loop1, iniciara 2 en compte de 3
+
+```
+
+**6. AÑADIR INFORMACIÓN DEL SCAN AL FICHERO EN CUESTIÓN (ASSEMBLE) (AUTOMÁTICO)**
+```bash
+mdadm --detail --scan > /etc/mdadmin.conf # --> Fiquem l'info del 'scan' al fitxer en questió (sabrà quin RAID ha d'arrancar, explicació + endevant)
+
+```
+
+
+**7. PARAR EL RAID**
+```bash
+mdadm --stop /dev/md0 # --> Aturem el RAID
+
+```
+
+**8. GENERAR EL ASSEMBLE Y EL SCAN DE NUEVO / CANTIDAD DE DISCOS ACTIVOS (MANUAL)**
+```bash
+mdadm --assemble --scan # --> Examina TODAS LAS PARTICIONES DEL SISTEMA e INTENTA "ENSAMBLAR" TODAS AQUELLAS QUE CREE QUE FORMAN UN RAID.
+```
+
+**9. ELIMINAR LA MARCA (TAG) DEL RAID**
+```bash
+mdadm -v --zero-superblock /dev/loop1 /dev/loop2 /dev/loop3 /dev/loop4 # --> Els hi treiem la marca (netejem)
+
+```
+
 ### 5. Automatitzar l'arrancada del RAID
 
-### 6. Practica proposada: RAID1 + SPARE
+Para automatizar el arranque, se genera un fichero de configuración llamado **`mdadm.conf`**. Hace falta guardarlo en **`/etc/fstab`**.
+
+Para que monte el RAID automáticamente.
+
+**1. GENERAR EL ASSEMBLE Y EL SCAN DE NUEVO / CANTIDAD DE DISCOS ACTIVOS + AÑADIR INFO EN /ETC/MDADM.CONF (AUTOMÁTICO)**
+```bash
+mdadm --assemble --scan # --> Examina TODAS LAS PARTICIONES DEL SISTEMA e INTENTA "ENSAMBLAR" TODAS AQUELLAS QUE CREE QUE FORMAN UN RAID + AÑADE LA INFO DEL 'SCAN' AL FICHERO (SABRÁ QUE RAID TIENE QUE ARRANCAR).
+```
+
+**2. MODIFICAR EL /ETC/FSTAB**
+```bash
+cat /etc/fstab
+
+```
+
+`/dev/md0 /mnt ext4 default 0 0`
+
+## PROPUESTA: RAID1 + SPARE
+
+Crear un raid de Level1 amb dues particions (loop0 i loop1) i dos discs d’spare. I practicar:
+● la creació del raid.
+● observar-ne les dades.
+● fail de un disc (spare entra en acció)
+● fail de un altre disc (spare entra en acció)
+● eliminar els dos dic fail.
+● afegir de nou els dos disc (ara fan el rol de spare)
+
 
 
 ## PRÁCTICA 2: RAID LEVEL 5
