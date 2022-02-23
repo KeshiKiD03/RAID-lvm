@@ -327,21 +327,23 @@ tree /dev/disk # --> Árbol de los discos
 ```bash
 mkfs -t ext4 /dev/md0 # --> Formatea el RAID1 del tipo EXT4
 ```
-
+**7. OBSERVAR DISCOS**
 ```bash
 blkid # --> Dice el ID de cada ELEMENTO de HARDWARE, aunque sea VIRTUAL (Crea Block Device Atributes).
 ```
 
 `/dev/md0: UUID="005caef9-e1e0-429a-bc81-7fcb5ba290cb" TYPE="ext4"`
 
+**8. MONTAR**
 ```bash
 mount /dev/md0 /mnt/ # --> Montamos el RAID1 (Multiple Disk 0) a /mnt
 ```
-
+**9. POPULATE RAID1**
 ```bash
 cp -r /boot/ /mnt/ # --> Copiamos los datos recursivos de BOOT a /mnt
 ```
 
+**10. DISK FREE**
 ```bash
 df -h # --> Muestra el DISK FREE.
 ```
@@ -355,28 +357,48 @@ df -h # --> Muestra el DISK FREE.
 * mdadm --examine /dev/loop0
 * cat /proc/mdstat
 
+**1. DETAIL SCAN (VEMOS RAID1 CREADA)**
 ```bash
-mdadm --detail --scan # --> Vemos el ARRAY creada por el RAID.
+mdadm --detail --scan # --> Vemos el ARRAY creada por el RAID1.
 ```
 
+**2. DETAIL /DEV/MD0 (DETALLES RAID1)**
 ```bash
-
+mdadm --detail /dev/md0 # --> Vemos los DETALLES creados por el RAID
 ```
 
-* mdadm --query /dev/loop0
-
+**3. QUERY (SI ES UN ARRAY (MD))**
 ```bash
-
+mdadm --query /dev/loop0 # --> Examina si es de tipo 'md' (Si no lo es, da ERROR)
 ```
-* mdadm --examine /dev/loop0
 
+**4. EXAMINE /DEV/LOOP0 (INFORMACIÓN DISPO)**
 ```bash
-
+mdadm --examine /dev/loop0 # --> Da información de la partición VIRTUAL
 ```
-* cat /proc/mdstat
 
+**5. SE COMPRUEBA EL ESTADO EN /PROC/MDSTAT**
 ```bash
+cat /proc/mdstat # --> Observamos los diferentes tipos de RAID y vemos cuales tenemos creadas.
+# También que particiones virtuales tiene asociadas
+```
 
+**6. PROVOCAR FAIL AL /DEV/LOOP1**
+```bash
+mdadm /dev/md0 --fail /dev/loop1 # --> Simula un ERROR del LOOP1 (AL SER RAID1 NO PASA NADA YA QUE SON MIRRORS!!!)
+```
+
+**7. SE COMPRUEBA EL ESTADO EN /PROC/MDSTAT AFTER FAIL**
+```bash
+cat /proc/mdstat # --> Observamos los diferentes tipos de RAID y vemos cuales tenemos creadas.
+# También que particiones virtuales tiene asociadas
+# Comprobamos AFTER FAIL
+```
+
+**8. DETAIL /DEV/MD0 (DETALLES RAID1) AFTER FAIL**
+```bash
+mdadm --detail /dev/md0 # --> Vemos los DETALLES creados por el RAID1.
+# Comprobamos AFTER FAIL
 ```
 
 ### 3. Errada i recuperació
