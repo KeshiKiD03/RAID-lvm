@@ -239,7 +239,7 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Raid0mas1.png/1024px-Raid0mas1.png)
 
-#### RAID 10:
+#### RAID 10 (RAID 1+0):
 
 * Fem un RAID 0 sobre dos RAID 1 (tenim 4 discos d'1TB cadascún --> en total 4TB però aprofitables / útils només 2TB)
 
@@ -248,6 +248,9 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 * NOMÉS POT FALLAR 1 PER CADA COSTAT (JA QUE SÓN UNA CÒPIA IDÈNTICA)
 
 ![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/Raid-10.png)
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/RAID_10.svg/220px-RAID_10.svg.png)
+
 
 ![](https://github.com/KeshiKiD03/lvm/blob/main/Photos/raid6.png)
 
