@@ -13,9 +13,9 @@
 
     * **LVM: Ejercicio 1: PV**: [PV](https://github.com/KeshiKiD03/lvm/tree/main/LVM#pv-physical-volumes----crea-vol%C3%BAmenes-f%C3%ADsicos)
 
-    * **LVM: Ejercicio 1: VG**: [PV](hhttps://github.com/KeshiKiD03/lvm/tree/main/LVM#vg-volume-groups----agrupa-vol%C3%BAmenes-f%C3%ADsicos)
+    * **LVM: Ejercicio 1: VG**: [VG](https://github.com/KeshiKiD03/lvm/tree/main/LVM#vg-volume-groups----agrupa-vol%C3%BAmenes-f%C3%ADsicos)
 
-    * **LVM: Ejercicio 1: LV**: [PV](https://github.com/KeshiKiD03/lvm/tree/main/LVM#lv-logical-volume----crea-vol%C3%BAmenes-l%C3%B3gicos)
+    * **LVM: Ejercicio 1: LV**: [LV](https://github.com/KeshiKiD03/lvm/tree/main/LVM#lv-logical-volume----crea-vol%C3%BAmenes-l%C3%B3gicos)
 
     * **LVM: Ejercicio 1: Mount**: [Mount](https://github.com/KeshiKiD03/lvm/tree/main/LVM#mfks-mkfs--montarlo-mount---etcfstab--poner-datos)
 
