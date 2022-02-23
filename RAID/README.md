@@ -18,9 +18,9 @@
     * **RAID**: [RAID](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
 
 
-* **PRACTICAS RAID: HOWTO 1: Trabajo Básico con RAID**: [](https://github.com/KeshiKiD03/lvm/tree/main/RAID/Pr%C3%A1ctica%201%20(HOWTO):%20Trabajo%20B%C3%A1sico%20con%20RAID))
+* **PRACTICAS RAID: HOWTO 1: Trabajo Básico con RAID**: [PT1](https://github.com/KeshiKiD03/lvm/tree/main/RAID/Pr%C3%A1ctica%201%20(HOWTO):%20Trabajo%20B%C3%A1sico%20con%20RAID)
 
-* **PRACTICAS RAID: HOWTO 2: RAID 5**: [](https://github.com/KeshiKiD03/lvm/tree/main/RAID/Pr%C3%A1ctica%202%20(HOWTO):%20RAID%20LEVEL%205))
+* **PRACTICAS RAID: HOWTO 2: RAID 5**: [PT2](https://github.com/KeshiKiD03/lvm/tree/main/RAID/Pr%C3%A1ctica%202%20(HOWTO):%20RAID%20LEVEL%205)
 
 ## RAID
 
