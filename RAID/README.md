@@ -223,7 +223,7 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 
 ![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/RAID-6.jpg)
 
-#### RAID 0+1 (RAID10):
+#### RAID 0+1:
 
 * RAID 1 + 0 hace **`STRIPPING y ESPEJO al MISMO TIEMPO`**
 
@@ -237,7 +237,7 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 
 * **`NOMÉS PODEN FALLAR COM A MÀXIM 2 DISCOS (DEL MATEIX COSTAT!) `**--> NO POT FALLAR 1 DISC PER CADA COSTAT.
 
-![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/Raid-10.png)
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Raid0mas1.png/1024px-Raid0mas1.png)
 
 #### RAID 10:
 
