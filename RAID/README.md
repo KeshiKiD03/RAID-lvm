@@ -23,13 +23,11 @@
 
     * **RAID 5**: [RAID5](https://github.com/KeshiKiD03/lvm/tree/main/RAID#raid-5-distributed-error-checking)
 
-    * **RAID 6**: [RAID6](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+    * **RAID 6**: [RAID6](https://github.com/KeshiKiD03/lvm/tree/main/RAID#raid-6-redundant-error-checking)
 
-    * **RAID 0+1**: [RAID0+1](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+    * **RAID 0+1**: [RAID0+1](https://github.com/KeshiKiD03/lvm/tree/main/RAID#raid-01)
 
-    * **RAID 1+0**: [RAID1+0](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
-
-    * **RAID**: [RAID](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+    * **RAID 1+0**: [RAID1+0](https://github.com/KeshiKiD03/lvm/tree/main/RAID#raid-10-raid-10)
 
 
 * **PRACTICAS RAID: HOWTO 1: Trabajo Básico con RAID**: [PT1](https://github.com/KeshiKiD03/lvm/tree/main/RAID/Pr%C3%A1ctica%201%20(HOWTO):%20Trabajo%20B%C3%A1sico%20con%20RAID)
@@ -64,6 +62,8 @@
 
 * **Todo para obtener `REDUNDANCIA`, baja `LATENCIA`, incrementar el `ANCHO de BANDA` y maximizar la habilidad de `RECUPERACIÓN` en caso de `FAIL`**.
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 **SOFTWARE RAID**
 
 * Implementa varios RAID LEVEL en el Kernel (**`SOFTWARE`**).
@@ -72,7 +72,11 @@
 
 * Linux Kernel contiene **`MD`** --> **`Multi Disc`** driver que permite **`RAID`**
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 ### TIPOS DE RAID
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #### RAID 0 (Performance)
 
@@ -133,6 +137,8 @@
 
 ![](http://www.mercadoit.com/blog/wp-content/uploads/2019/01/Raid-1.jpg)
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 #### RAID 2
 
 **`RAID2 = RAID0 + RAID1`**.
@@ -145,6 +151,7 @@
 
 ![](https://www.profesionalreview.com/wp-content/uploads/2019/01/RAID-2.png)
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #### PARIDAD
 
@@ -155,6 +162,8 @@ Recuperarse del fallo de dispositivo es posible leyendo los datos buenos que que
 La paridad es usada por los niveles de RAID 2, 3, 4 y 5. 
 
 RAID 1 no utiliza la paridad puesto que todos los datos están completamente duplicados al tratarse de un espejo.
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #### RAID 3
 
@@ -198,6 +207,8 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 
 ![](https://static.thegeekstuff.com/wp-content/uploads/2011/12/raid4.png)
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 #### RAID 5 (Distributed Error Checking)
 
 **`RAID5 = RAID4 + PARIDAD REPARTIDA (STRIPPING CON PARIDAD) - MIN 3 DISCOS`**.
@@ -232,6 +243,7 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 
 ![](https://www.intel.com/content/dam/support/us/en/images/chipsets/imsm/sb/img/raid5.jpg)
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #### RAID 6 (Redundant Error Checking)
 
@@ -259,6 +271,8 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 
 ![](https://upload.wikimedia.org/wikipedia/commons/thumb/c/c4/Raid0mas1.png/1024px-Raid0mas1.png)
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 #### RAID 10 (RAID 1+0):
 
 * Fem un RAID 0 sobre dos RAID 1 (tenim 4 discos d'1TB cadascún --> en total 4TB però aprofitables / útils només 2TB)
@@ -274,6 +288,7 @@ RAID 1 no utiliza la paridad puesto que todos los datos están completamente dup
 
 ![](https://github.com/KeshiKiD03/lvm/blob/main/Photos/raid6.png)
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ### IMPORTANT:
 ```yaml
