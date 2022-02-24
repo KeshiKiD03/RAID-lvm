@@ -1,2 +1,5 @@
 # CHEATSHEET LVM
 
+* PV
+
+* VG
