@@ -323,12 +323,14 @@ cat /etc/fstab
 
 `/dev/md0 /mnt ext4 default 0 0`
 
-## PROPUESTA: RAID1 + SPARE
 
-Crear un raid de Level1 amb dues particions (loop0 i loop1) i dos discs d’spare. I practicar:
-● la creació del raid.
-● observar-ne les dades.
-● fail de un disc (spare entra en acció)
-● fail de un altre disc (spare entra en acció)
-● eliminar els dos dic fail.
-● afegir de nou els dos disc (ara fan el rol de spare)
+
+
+
+
+
+
+
+
+
+
