@@ -202,3 +202,50 @@ Dels tres discos de RAID dos emmagatzemem dades i un tercer paritat, però no ta
 
 
 Així doncs, si falla un dels tres discos el sistema deixa de funcionar. Si hi ha un disc de spare, aquest s’hauria d’activar automàticament per solventar el problema. Si un altre disc falla, llavors el RAID deixa de funcionar.
+
+### 2. EJEMPLO DE RAID LEVEL 5: Degradar y Recuperar
+
+Aquest exemple és el mateix que l’anterior on d’un **RAID5** de tres unitats **més** una de **spare** i
+se n’han **`espatllat dues`**.
+
+Primer ha entrat en **funcionament** l’spare però en el **segon fail** el raid ha quedat **`degradat`** (**`sense redundància`**). 
+
+A continuació **`s’han eliminat`** els **`dos discs fail`** i se n’han afegit dos de nous (els mateixos). 
+
+El raid ha fet **`la sincronització`** en un dels discs i l’altre ha passat a ser spare.
+
+
+**1. OBSERVAR STATUS DEL RAID**
+```bash
+cat /proc/mdstat
+```
+
+**2. VER DETALLES DE LA RAID5**
+```bash
+mdadm --detail /dev/md0
+```
+
+**3. AÑADIR A LA RAID5 EL LOOP1**
+```bash
+mdadm /dev/md0 --add /dev/loop1
+```
+
+**4. AÑADIR A LA RAID5 EL LOOP2**
+```bash
+mdadm /dev/md0 --add /dev/loop2
+```
+
+**5. OBSERVAR STATUS DEL RAID**
+```bash
+cat /proc/mdstat
+```
+
+**6. VER DETALLES DE LA RAID5 DE NUEVO**
+```bash
+mdadm --detail /dev/md0
+```
+
+**7. MIRAR EL DISK FILE (ALMACENAMIENTO DEL MONTAJE)**
+```bash
+df -h
+```
