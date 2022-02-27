@@ -5,34 +5,6 @@
 
 ## INDEX
 
-* **LVM**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
-
-    * **LVM**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
-
-    * **LVM**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
-
-    * **LVM**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
-
-    * **LVM**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
-
-    * **LVM**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
-
-    * **LVM**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
-
-
-
-* **RAID**: [LVM](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
-
-    * **RAID**: [RAID](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
-
-    * **RAID**: [RAID](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
-
-    * **RAID**: [RAID](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
-
-    * **RAID**: [RAID](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
-
-    * **RAID**: [RAID](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
-
 
 * **GPG**: [GPG](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
 
@@ -49,781 +21,754 @@
     * **GPG**: [GPG](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
 
 
-## LVM
-
-### LOGICAL VOLUME MANAGER
-
-* Las particiones **LVM** tienen **`ciertas ventajas`** sobre las particiones estándares.
-
-* LVM son formateados como **`Volúmenes físicos`**.
-
-* 1 o más **LVM** son combinados en **`Grupos de Volumen`**.
-
-    * Cada **`almacenamiento grupal`** está dividido en uno o más **`volúmenes lógicos`**.
-
-        * Los **volúmenes lógicos** son como **particiones estándar**.
-
-            * Tienen el `FILESYSTEM`, `ext4` y el `mountpoint`.
-
-
-### Resumen: 
-
-* LVM son una `pila de bloques`.
-
-    * Un bloque es un `almacenamiento` que se usa para almacenar datos.
-
-    * Los bloques pueden ser agrupados en un grupo (`stack`).
-
-        * Los discos físicos son combinados en un *`volumen grupal`*.
-
-        * El `stack resultante`, puede subdividirse en varios **`volúmenes de tamaño variable`.**.
-
-
-* Un administrador puede hacer crecer o decrecer los **`volúmenes lógicos`** sin tener que **`destruir datos`**, en lugar de **`standard partitions`**. En caliente.
-
-
-### ÓRDENES A UTILIZAR:
-
-* apropos lvm `[Busca el MAN de LVM]` 
-
-```
-lvm (8)              - LVM2 tools
-lvmconfig (8)        - Display and manipulate configuration information
-lvmdiskscan (8)      - List devices that may be used as physical volumes
-lvmdump (8)          - create lvm2 information dumps for diagnostic purposes
-lvmraid (7)          - LVM RAID
-lvmvdo (7)           - Support for Virtual Data Optimizer in LVM
-pvcreate (8)         - Initialize physical volume(s) for use by LVM
-pvremove (8)         - Remove LVM label(s) from physical volume(s)
-...
-```
-
-* Ordres de gestió de Volums Lògics:
-
-* pv [TAB]
-
-```
-       pvchange      Change attributes of a Physical Volume.
-       pvck          Check Physical Volume metadata.
-       pvcreate      Initialize a disk or partition for use by LVM.
-       pvdisplay     Display attributes of a Physical Volume.
-       pvmove        Move Physical Extents.
-       pvremove      Remove a Physical Volume.
-       pvresize      Resize a disk or partition in use by LVM2.
-       pvs           Report information about Physical Volumes.
-       pvscan        Scan all disks for Physical Volumes.
-```
-
-* vg [TAB]
-
-```
-       vgcfgbackup   Backup Volume Group descriptor area.
-       vgcfgrestore  Restore Volume Group descriptor area.
-       vgchange      Change attributes of a Volume Group.
-       vgck          Check Volume Group metadata.
-       vgconvert     Convert Volume Group metadata format.
-       vgcreate      Create a Volume Group.
-       vgdisplay     Display attributes of Volume Groups.
-       vgexport      Make volume Groups unknown to the system.
-       vgextend      Add Physical Volumes to a Volume Group.
-       vgimport      Make exported Volume Groups known to the system.
-       vgimportclone Import and rename duplicated Volume Group (e.g. a hardware snapshot).
-       vgmerge       Merge two Volume Groups.
-       vgmknodes     Recreate Volume Group directory and Logical Volume special files
-       vgreduce      Reduce a Volume Group by removing one or more Physical Volumes.
-       vgremove      Remove a Volume Group.
-       vgrename      Rename a Volume Group.
-       vgs           Report information about Volume Groups.
-       vgscan        Scan all disks for Volume Groups.
-       vgsplit       Split  a  Volume Group into two, moving any logical volumes from one Volume Group
-                     to another by moving entire Physical Volumes.
-
-```
-
-* lv [TAB]
-
-```
-       lvchange      Change attributes of a Logical Volume.
-       lvconvert     Convert a Logical Volume from linear to mirror or snapshot.
-       lvcreate      Create a Logical Volume in an existing Volume Group.
-       lvdisplay     Display attributes of a Logical Volume.
-       lvextend      Extend the size of a Logical Volume.
-       lvmconfig     Display the configuration information after loading  lvm.conf(5)  and  any  other
-                     configuration files.
-       lvmdiskscan   Scan for all devices visible to LVM2.
-       lvmdump       Create lvm2 information dumps for diagnostic purposes.
-       lvreduce      Reduce the size of a Logical Volume.
-       lvremove      Remove a Logical Volume.
-       lvrename      Rename a Logical Volume.
-       lvresize      Resize a Logical Volume.
-       lvs           Report information about Logical Volumes.
-       lvscan        Scan (all disks) for Logical Volumes.
-
-```
-
-
-### Ejercicio Práctico 1: `Usar LVM`
-
-* Se crean **`tres unidades físicas imaginarias`** usando **`dd`** para generar espacio de disco virtual.
-
-* Se asignan ficheros a un **`dispositivo`** de disco físico de **`loopback`**. 
-
-* Se crean **`3 particiones`** **`/dev/loop0`**, **`/dev/loop1`**, **`/dev/loop2`**.
-
-1. Crear los 3 **`ficheros de imagen`**
-
-#### DD (`Convert and COPY a FILE`) --> /dev/zero (Imaginario)
-
-```
-root@i11:/opt/lvm# dd if=/dev/zero of=disk01.img bs=1k count=500K
-
-512000+0 records in
-512000+0 records out
-524288000 bytes (524 MB, 500 MiB) copied, 0.533952 s, 982 MB/s
-```
-```
-root@i11:/opt/lvm# dd if=/dev/zero of=disk02.img bs=1k count=500K
-
-512000+0 records in
-512000+0 records out
-524288000 bytes (524 MB, 500 MiB) copied, 0.540251 s, 970 MB/s
-
-```
-```
-# dd if=/dev/zero of=disk03.img bs=1k count=100K
-102400+0 records in
-102400+0 records out
-104857600 bytes (105 MB, 100 MiB) copied, 0.146417 s, 716 MB/s
-```
-
-* Se crea una carpeta en `/opt` 
-
-* mkdir `lvm`
-
-* Se los asigna al `LOOPBACK` como `ROOT` Del 0-2 | (Se empieza del 2 al 3) # En la CLASE.
-
-    * **`Troubleshoot`**
-
-```
-## ¡¡ YA ESTÁ OCUPADO !!
-root@i11:/opt/lvm# losetup /dev/loop0 disk01.img 
-losetup: disk01.img: failed to set up loop device: Device or resource busy
-```
-
-* Si ya tuvieramos los LOOPS ocupados con el comando --> **losetup -d /dev/loopX** --> **Podemos eliminar el LOOP**.
-
-```
-root@i11:/opt/lvm# losetup -d /dev/loop2
-root@i11:/opt/lvm# losetup -d /dev/loop3
-
-root@i11:/opt/lvm# losetup -a
-/dev/loop1: [66306]:4333633 (/var/lib/snapd/snaps/core_11993.snap)
-/dev/loop0: [66306]:4333635 (/var/lib/snapd/snaps/msnake_10.snap)
-root@i11:/opt/lvm# 
-```
-
-#### **Asignarlos a un dispositivo LOSETUP (/dev/loop0 /dev/loop2 /dev/loop3)**
-
-* Añadimos a un **`DISPOSITIVO LOSETUP`**
-```
-root@i11:/opt/lvm# losetup -a
-/dev/loop0: ...
-/dev/loop1: ...
-/dev/loop2: ...
-
-```
-```
-root@i11:/opt/lvm# losetup /dev/loop0 disk01.img 
-root@i11:/opt/lvm# losetup /dev/loop1 disk02.img
-root@i11:/opt/lvm# losetup /dev/loop2 disk03.img 
-
-```
-
-* `Verificamos`
-
-```
-root@i11:/opt/lvm# losetup -a
-
-/dev/loop0: [66306]:4365633 (/opt/lvm/disk01.img)
-
-/dev/loop1: [65406]:4333612 (/opt/lvm/disk02.img)
-
-/dev/loop2: [66806]:4398633 (/opt/lvm/disk03.img)
-
-root@i11:/opt/lvm# 
-```
-
-#### PV (PHYSICAL VOLUMES) --> `Crea volúmenes físicos`.
-
-2. Disponemos de **`3 trozos`** de almacenamiento para crear un **`volumen físico`** para cada uno de ellos.
-
-    * Es decir, adaptados para ser utilizados como almacenamiento **`LVM`**.
-
-    * Primero se realiza el **`Physical Volume`**.
-
-```
-root@i11:/opt/lvm# pvcreate /dev/loop0 /dev/loop1 /dev/loop2
-
-  Physical volume "/dev/loop0" successfully created.
-  Physical volume "/dev/loop1" successfully created.
-  Physical volume "/dev/loop2" successfully created.
-```
-
-* Con la orden **`pvdisplay`**, observamos a fondo el **`volumen fisico`**.
-
-
-```
-root@i11:/opt/lvm# pvdisplay /dev/loop2
-  "/dev/loop2" is a new physical volume of "100.00 MiB"
-  --- NEW Physical volume ---
-  PV Name               /dev/loop2
-  VG Name               
-  PV Size               100.00 MiB
-  Allocatable           NO
-  PE Size               0   
-  Total PE              0
-  Free PE               0
-  Allocated PE          0
-  PV UUID               lCiF9w-V0Wh-2xC8-u04t-cHCT-zaQw-AlCP8k
-```   
-
-
-
-#### VG (VOLUME GROUPS) --> `Agrupa volúmenes físicos`.
-
-* Los espacios de almacenamiento **`LVM`**, se agrupan en **`UNIDADES DE ALMACENAMIENTO GRUPALES`** llamados **`VOLUME GROUPS`**.
-
-* El `VOLUME GROUP` a que crearemos se llamará **`diskedt`**.
-
-----------------------------------------------
-
-1. `Creamos` el VOLUME GROUP
-```
-root@i11:/opt/lvm# vgcreate diskedt /dev/loop0 /dev/loop1
-  Volume group "diskedt" successfully created
-```
-2. `Visualizamos` el VOLUME GROUP
-```
-root@i11:/opt/lvm# vgdisplay diskedt
-  --- Volume group ---
-  VG Name               diskedt
-  System ID             
-  Format                lvm2
-  Metadata Areas        2
-  Metadata Sequence No  1
-  VG Access             read/write
-  VG Status             resizable
-  MAX LV                0
-  Cur LV                0
-  Open LV               0
-  Max PV                0
-  Cur PV                2
-  Act PV                2
-  VG Size               192.00 MiB
-  PE Size               4.00 MiB
-  Total PE              48
-  Alloc PE / Size       0 / 0   
-  Free  PE / Size       48 / 192.00 MiB
-  VG UUID               z3Upz9-EN42-4JDC-dcse-2W2q-VOkd-rr4D6L
-
-```
-
-### `NOTA`
-
-* Los espacios de **`100M`** de **`loop0`** y **`loop1`** se juntan para crear un **`dispositivo físico de 200M`** llamado **`/dev/diskedt`** 
-
-    * (`No aparece hasta particionarlo`) (Aprox de `192M`).
-
-        * Se `pierde espacio` de almacenamiento debido a crear estructuras para la `gestión LVM`.
-
-* Observamos el antes y después de asignar **`PHYSICAL VOLUMES`** al **`VOLUME GROUP`**
-
-```
-# ANTES
-
-root@i11:/opt/lvm# pvdisplay /dev/loop0
-  "/dev/loop2" is a new physical volume of "100.00 MiB"
-  --- NEW Physical volume ---
-  PV Name               /dev/loop0
-  VG Name               
-  PV Size               100.00 MiB
-  Allocatable           NO
-  PE Size               0   
-  Total PE              0
-  Free PE               0
-  Allocated PE          0
-  PV UUID               lCiF9w-V0Wh-2xC8-u04t-cHCT-zaQw-AlCP8k
-```
-```
-# DESPUES
-
-root@i11:/opt/lvm# pvdisplay /dev/loop0
-  --- Physical volume ---
-  PV Name               /dev/loop0
-  VG Name               diskedt
-  PV Size               100.00 MiB / not usable 4.00 MiB
-  Allocatable           yes 
-  PE Size               4.00 MiB
-  Total PE              24
-  Free PE               24
-  Allocated PE          0
-  PV UUID               lCiF9w-V0Wh-2xC8-u04t-cHCT-zaQw-AlCP8k
-
-
-```
-
-#### LV (LOGICAL VOLUME) --> `Crea volúmenes lógicos`.
-
-* Cuando ya tengamos los **`VOLUME GROUP`** podemos hacer particiones llamadas **`Logical Volume`**.
-
-    * Creamos **`2 PARTICIÓNES LÓGICAS`**: **`50M`** llamado **`sistema`** y **`150M`** llamado **`dades`**.
-
-    * **`Resumen`**: Fijarse que de de `DOS PV (Physical Volume de 100M)` --> Se ha generado un `VM (Volume Group) = diskedt de 200M` --> Ahora se **`subdividirá`** en 2 particiones **`Logical Volume`**.
-
-1. **`LV: Sistema`**
-
-```
-root@i11:/opt/lvm# lvcreate -L 50M -n sistema /dev/diskedt
-
-  Rounding up size to full physical extent 52.00 MiB
-  Logical volume "sistema" created.
-```
-
-2. **`LV: Dades`**
-```
-root@i11:/opt/lvm# lvcreate -L 150M -n dades /dev/diskedt
-
-  Rounding up size to full physical extent 152.00 MiB
-  Logical volume "sistema" created.
-```
-
-**`IMPORTANTE`**
-
-* Dará error en la **segunda**.
-
-* Para solucionarlo usaremos el **`-l100%FREE`**.
-
-```
-root@i11:/opt/lvm# lvcreate -l100%FREE -n dades /dev/diskedt
-  Logical volume "dades" created.
-```
-
-* Significa que usará el **`100% del DISCO`**, es decir lo que le **`RESTA`** en este caso.
-
-    * Si fuera al 50% --> **`-l50%FREE.`**.
-
-
-
-3. **`MOSTRAMOS LOS RESULTADOS con un "LVDISPLAY"`**
-
-```
-root@i11:/opt/lvm# lvdisplay
-  --- Logical volume ---
-  LV Path                /dev/diskedt/sistema
-  LV Name                sistema
-  VG Name                diskedt
-  LV UUID                sLtVEg-c2qJ-ayH2-z7WQ-DyYR-iyEo-wOxOje
-  LV Write Access        read/write
-  LV Creation host, time i11, 2022-02-18 11:28:27 +0100
-  LV Status              available
-  # open                 0
-  LV Size                200.00 MiB
-  Current LE             50
-  Segments               1
-  Allocation             inherit
-  Read ahead sectors     auto
-  - currently set to     256
-  Block device           253:0
-   
-  --- Logical volume ---
-  LV Path                /dev/diskedt/dades
-  LV Name                dades
-  VG Name                diskedt
-  LV UUID                Mnhi4c-9Ia9-3VA6-DTyo-Dhcq-ESEB-0ez2fU
-  LV Write Access        read/write
-  LV Creation host, time i11, 2022-02-18 11:29:24 +0100
-  LV Status              available
-  # open                 0
-  LV Size                100.00 MiB
-  Current LE             25
-  Segments               1
-  Allocation             inherit
-  Read ahead sectors     auto
-  - currently set to     256
-  Block device           253:1
-
-```
-
-### `VERIFICACIÓN - CREACIÓN`
-
-4. Hacemos un **`TREE`** para verificar los datos --> Nos debería aparecer correctamente. **Vemos que sale VG / LVM / PV**
-```
-root@i11:/opt/lvm# tree /dev/disk
-
-# Vemos que sale
-
-# VG
-
-│   ├── dm-name-diskedt-dades -> ../../dm-1
-│   ├── dm-name-diskedt-sistema -> ../../dm-0
-
-
-# LVM
-
-│   ├── dm-uuid-LVM-z3Upz9EN424JDCdcse2W2qVOkdrr4D6LKamHDKLQGCg0B8VZ3avxd8sYkZnBc6Oc -> ../../dm-0
-│   ├── dm-uuid-LVM-z3Upz9EN424JDCdcse2W2qVOkdrr4D6LZEEOn6uidryzQ3jZ8AYfsdORy2EitpXm -> ../../dm-1
-
-
-# PV
-
-│   ├── lvm-pv-uuid-HK5Cgu-sp8y-aVWK-RAoL-G2Ok-xs5f-jbqGI3 -> ../../loop2
-│   ├── lvm-pv-uuid-lCiF9w-V0Wh-2xC8-u04t-cHCT-zaQw-AlCP8k -> ../../loop1
-│   ├── lvm-pv-uuid-SQmPdK-RXTc-s7Uk-fXM9-MuiP-ghw7-yQkrXz -> ../../loop0
-
-```
-
-5. Hacemos un ls -l.
-
-```
-root@i11:/opt/lvm# ls -l /dev/diskedt/
-
-
-lrwxrwxrwx 1 root root 7 Feb  9 09:31 dades -> ../dm-1
-lrwxrwxrwx 1 root root 7 Feb  9 09:30 sistema -> ../dm-0
-```
-
-
-#### **`MFKS (mkfs) / MONTARLO (mount) - (/etc/fstab) / PONER DATOS`**
-
-* Al observar la cantidad de PE (**`BLOQUES = UNIDADES DE ASIGNACION`**) que utiliza cada **`Logical Volume`**:
-
-    * **`SISTEMA`**: 13 **UNIDADES de ASIGNACIÓN** (**`PE`**) de 4MB = 52MB de almacenamiento.
-
-        * Todo en un **mismo segmento** (Physical Volume)
-
-    * **`DADES`**: 35 de 4MB que proporciona 140MB de almacenamiento.
-
-        * Ocupa *`2 segmentos`* - Es decir usa 2 **`Physical Volumes`**
-
-
-* **`RESUMEN`:** Cada bloque **`PE`** se tiene que multiplicar por 4MB que está reservado para **`LV`**. Ahí saldrá el almacenamiento que tendrá **`asignado`**.
-
-1. **SISTEMA**
-
-```
-root@i11:/opt/lvm# mkfs -t ext4 /dev/diskedt/sistema
-```
-
-2. **DADES**
-
-```
-root@i11:/opt/lvm# mkfs -t ext4 /dev/diskedt/dades
-```
-
-#### **`MOUNT POINT`**
-
-* **`Montaje Manual`**
-
-```
-root@i11:/opt/lvm# mkdir /mnt/dades
-root@i11:/opt/lvm# mkdir /mnt/sistema
-```
-
-```
-root@i11:/opt/lvm# mount /dev/diskedt/dades /mnt/dades/
-root@i11:/opt/lvm# mount /dev/diskedt/sistema /mnt/sistema/
-
-```
-
-* **`Montaje Automático`**
-
-*OPCIONAL*
-
-* Hay que editar el **`/etc/fstab`**:
-
-
-```
-# vim /etc/fstab
-```
-
-```
-/dev/diskedt/sistema  /mnt/sistema  ext4  errors=remount-ro 0 0
-/dev/diskedt/dades  /mnt/dades  ext4  errores=remount-ro  0 0
-```
-
-
-
-#### **`COPY DATA ON IT`**
-
-```
-root@i11:/opt/lvm# cp -R /boot/* /mnt/dades
-```
-```
-root@i11:/opt/lvm# cp /boot/* /mnt/sistema/
-```
-
-O
-
-```
-sudo cp /bin/?? /mnt/sistema/
-sudo cp /bin/?? /mnt/DADES/
-```
-
-
-#### **`USAMOS DF PARA REPORTAR EL ESPACIO DE DISCO USADO`**.
-
-
-```
-root@i11:/opt/lvm# df -h
-Filesystem                                                            Size  Used Avail Use% Mounted on
-udev                                                                  7.8G     0  7.8G   0% /dev
-tmpfs                                                                 1.6G  1.9M  1.6G   1% /run
-/dev/nvme0n1p5                                                        183G   52G  122G  30% /
-tmpfs                                                                 7.8G   52M  7.8G   1% /dev/shm
-tmpfs                                                                 5.0M  4.0K  5.0M   1% /run/lock
-/dev/loop0                                                            100M  100M     0 100% /snap/core/11993
-/dev/loop1                                                            128K  128K     0 100% /snap/msnake/10
-tmpfs                                                                 1.6G  916K  1.6G   1% /run/user/103033
-gandhi.informatica.escoladeltreball.org:/users/inf/hisx2/isx36579183  931G  319G  613G  35% /home/users/inf/hisx2/isx36579183/isx36579183
-/dev/sda1                                                             932G  501G  432G  54% /media/isx36579183/ChaseKiD03 My Passport
-/dev/mapper/diskedt-dades                                             131M   61M   60M  51% /mnt/dades
-/dev/mapper/diskedt-sistema                                            46M   45M     0 100% /mnt/sistema
-root@i11:/opt/lvm# 
-
-
-```
-
-
-
-
-#### **`CON LA ORDEN BLKID VEMOS BLOCK DEVICE ATTRIBUTES`**.
-
-```
-root@i11:/opt/lvm# blkid
-
-...
-/dev/mapper/diskedt-sistema: UUID="0ef8d932-4dfa-449d-9385-89f6fbc8e5fb" BLOCK_SIZE="1024" TYPE="ext4"
-/dev/mapper/diskedt-dades: UUID="18b81e3e-49c5-419f-80ca-8c1b74130b60" BLOCK_SIZE="1024" TYPE="ext4"
-root@i11:/opt/lvm# 
-
-```
-
-#### **`OTROS COMANDOS`**
-
-* **`LSBLK`**
-
-```
-root@i11:/mnt/dades# lsblk
-NAME              MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
-loop0               7:0    0  99.4M  1 loop /snap/core/11993
-loop1               7:1    0    16K  1 loop /snap/msnake/10
-loop2               7:2    0   100M  0 loop 
-├─diskedt-sistema 254:0    0    52M  0 lvm  /mnt/sistema
-└─diskedt-dades   254:1    0   140M  0 lvm  
-loop3               7:3    0   100M  0 loop 
-└─diskedt-dades   254:1    0   140M  0 lvm  
-loop4               7:4    0   100M  0 loop 
-nvme0n1           259:0    0 465.8G  0 disk 
-├─nvme0n1p1       259:1    0     1K  0 part 
-├─nvme0n1p5       259:2    0 186.3G  0 part /
-├─nvme0n1p6       259:3    0 186.3G  0 part 
-└─nvme0n1p7       259:4    0   4.7G  0 part 
-root@i11:/mnt/dades# 
-
-```
-
-### Ejercicio Práctico 2: `Modificaciones en Caliente`
-
-* La principal ventaja de utilización de LVM es que se puede modificar en **`caliente`**.
-
-    * Se pueden modificar las composiciones de los **`grupos de volúmenes`**.
-
-    * Se pueden hacer un *`resize`* de los volúmenes lógicos.
-
-    * Esto es lo que se puede hacer:
-
-        * Ampliar el Volume Group **`diskedt`** añadiendo **`100M`** procedente de /dev/loop2.
-
-        * Si el Volume Group diskedt dispone de más espacio libre, se puede **`asignar`** ese espacio a los volúmenes lógicos --> **`datos`**, **`sistema`** o crear un **`nuevo vol lógico`**.
-
-        * Si no se añade espacio nuevo a **`diskedt`**, se puede **`redistribuir`** su espacio libre.
-
-            * Se puede **`repartir su espacio`** entre sus **`2`** particiones lógicas de forma diferente. 
-
-                * Sin tener que **`borrar`** y **`crear de nuevo`**.
-
-        * En todo momento, los LV se pueden **`redimensionar`**:
-
-            * **`ampliandolos`**.
-
-            * **`reduciendolos (shrink)`**, 
-            
-            * **`siempre y que los datos quepan`**
-
-
-#### **`IMPORTANTE`**
-
-* Es importante remarcar que si queremos **`redimensionar`** una **`LV`**, hay que redimensionar también su **`SISTEMA DE FICHEROS`**
-
-
-#### **``Modificaciones en Caliente``**
-
-1. Asignar **`100M`** de **`/dev/loop2`** al grupo **`/dev/diskedt`**
-
-    2. Añadir 30M de este nuevo espacio al volúmen lógico: *`sistema`*.
-
-2. Crear una nueva partición lógica llamada *`services`* de 60M con el **`espacio sobrante`** del VG **`diskedt`**.
-
-3. Redimensionar un LV:
-
-    * Haciéndolo más pequeño (**`shrink`**) el LV *`sistema`*.
-
-4. Con el espacio liberado de *`sistema`*, y el espacio libre sobrante del volúmen *`diskedt`*, *`ampliar`* el espacio del volúmen lógico *`datos`*.
-
-
-#### **``PRIMERA PART``**
-
-**Ara simularem que afegim un nou D.D:**
-
-* **`vgextend diskedt /dev/loop2`**
-
-    * Afegim el D.D al 'VOlume Group' de 'diskedt'
-
-* **`vgdisplay diskedt`**
-
-    * Llistem el 'Volume Group'
-
-* **`lvextend -L +30 /dev/diskedt/sistema /dev/loop2`**
-
-    * Ara repartirem aquest espai lliure per assignar ampliant en 30M la partició 'sistema'
-
-* **`lvdisplay /dev/diskedt/sistema`** 
-
-    * Llistem el 'Logical Volume' de 'sistema', ara ocupa 1 segment més (2) i ocupa 21 unitats d'assignació 'PE' de 4M (21 * 4 = 84 MiB)
-
-* **`df -h`** 
-
-    * Llistem l'espai disponible.
-
-<opcional>
-
-* **`umount /mnt/dades`**
-
-    * Desmuntem el directori de 'dades'... (no cal ja que farem un grow amb resize)
-
-* **`umount /mnt/sistema`**
-
-    * Desmuntem el directori de 'sistema'... (ídem)
-
--------
-
-* **`e2fsck -f /dev/diskedt/sistema`**
-
-    * Comprovem i reparem el sistema d'arxius de 'sistema'
-
-* **`resize2fs /dev/diskedt/sistema`**
-
-    * Agrandem el tamany de les dades fins el màxim que és pugui.
-
-* **`df -h`**
-
-* **`mount /dev/diskedt/dades /mnt/dades`**
-
-* **`mount /dev/diskedt/sistema /mnt/sistema`**
-
-**Ara, comprobem i veiem que tenim espai utilitzable quan abans no teníem res (hem agrandat l'espai utilitzable)**
-
-#### **``SEGONA PART``**
-
-* df -h
-
-/dev/mapper/diskedt-dades    131M   65M   56M  54% /mnt/dades
-
-/dev/mapper/diskedt-sistema   78M   46M   26M  65% /mnt/sistema
-
-* **`lvcreate -L 60 -n services /dev/diskedt`** --> Creem una nova partició lògica anomenada 'services'
-
-* **`lvdisplay /dev/diskedt/services `**--> La llistem..
-
-**Ara el volum 'diskedt' disposa de 300M repartits a 80M per a sistema (50 + 30), 150M per a dades i 60M per al nou volum lògic 'services'**
-
-* **`vgdisplay /dev/diskedt`** --> Llistem el volum lògic 'diskedt'
-
-
-#### **``TERCERA PART``**
-
-**Volem traspassar tot l'espai a la partició de 'dades':**
-
-* **`umount /mnt/dades`**
-
-* **`umount /mnt/sistema`**
-
-**Primer reduïm la partició 'sistema' i després el volum lògic 'sistema':**
-
-* **`e2fsck -f /dev/diskedt/sistema`**
-
-* **`resize2fs /dev/diskedt/sistema [85M]`** --> Reduïm fins a 85M (important fixar-se en la mida mínima a la que s'ha de reduïr)
-
-* **`lvreduce -L 85M -r /dev/diskedt/sistema`** --> Ara reduïrem el volum lògic
-
-* **`lvdisplay /dev/diskedt/sistema`** --> Comprobem
-
-* **`mount /dev/diskedt/sistema /mnt/sistema/`**
-
-* **`mount /dev/diskedt/dades /mnt/dades/`**
-
-* **`df -h`** --> Comprobem l'espai disponible
-
-#### **``CUARTA PART``**
-
-**Assignem al volum 'dades' tot l'espai sobrant:**
-
-* **`vgdisplay diskedt`** --> Llistem el 'Volume Group' 'diskedt' (important fixar-se en 'Free PE' per veure quan agrandarà)
-
-* **`lvdisplay /dev/diskedt/dades`** --> Llistem el 'Logical Volume' 'dades'
-
-* **`umount /mnt/sistema`**
-
-* **`umount /mnt/dades`**
-
-* **`lvextend -l +100%FREE /dev/diskedt/dades`** --> Extendrà de 140MiB a 144MiB.
-
-**Coses a mirar per l'exàmen:**
-
-* **`man LV (-l, -L)`**
-
-* **`sudo lvreduce -L 25M -r /dev/diskedt/sistema --> -r (fa el resize2fs)`**
-
-**Pràctica:**
-
-* **`dd if=/dev/zero of=disk04.img bs=1k count=500k`**
-
-* **`sudo losetup /dev/loop4 disk04.img`**
-
-* **`sudo losetup -a`**
-
-* **`sudo pvcreate /dev/loop4`**
-
-* **`sudo vgextend diskedt /dev/loop4`**
-
-* **`sudo lvdisplay /dev/diskedt/dades`**
-
-* **`sudo lvdisplay /dev/diskedt/sistema`**
-
-* **`sudo pvdisplay /dev/loop1`**
-
-* **`sudo pvmove /dev/loop1 /dev/loop2 /dev/loop3`** --> Ho mou on troba 'PE' lliures, ho mourà on sigui.
-
-* **`sudo vgreduce diskedt /dev/loop1 /dev/loop2 /dev/loop3`** --> Primer treiem el 'PV' de 'loop1' del grup ja que encara que no tingui capespai ocupat, segueix estant conectat amb el 'VG'.
-
-* **`sudo pvremove /dev/loop1 /dev/loop2 /dev/loop3`**
-
-* **`sudo lvextend -L +200M -r /dev/diskedt/dades`** --> Extenem 200M i fem el resize (-r)
-
-* **`df -h`** --> Comprovem
-
-
-
-## RAID
-
 ## GPG
+
+## CHEAT SHEET
+
+`Clasificación de Criptografías`
+
+* Criptografía de **Clave Simétrica**:
+
+    * *Menor coste* que los *Asimétricos*.
+
+    * Cifrar y descrifrar con la simétrica es más rápido y requiere claves más pequeñas y menos coste.
+
+    * Ambos son robustos pero no se puede decir que unos son mejores o que cifran mejor.
+
+    * **USA LA MISMA CLAVE PARA ENCRIPTAR Y DESENCRIPTAR.**
+
+    * El problema del Cifrado Simétrico es que esta clave es **COMPARTIDA** en 2 interlocutores --> Problema de compartir el **SECRETO de forma segura**.
+
+    * Tiene buen rendimiento para **cifrar flujos continuos** --> **TCP**.
+
+
+
+* Criptografía de Clave Asimétrica:
+
+    * Mayor coste, usa Dos Llaves diferentes --> **CLAVE PRIVADA Y CLAVE PÚBLICA**.
+
+    * Se usan como pareja para conseguir el **CIFRADO y FIRMADO**.
+
+    * Se interpreta algo que se ha **HECHO** y que se puede **DESHACER**.
+
+    * La clave Privada se tiene que mantener fuera, es sólo **SECRETO**.
+
+    * La clave pública se tiene que **PROPAGAR A OTROS**.
+
+    * Para **`CIFRAR`**, se **CIFRA CON LA CLAVE PÚBLICA DEL DESTINATARIO**.
+
+    * Para **`DESCIFRAR`**, el destinatario DESCIFRA con su **CLAVE PRIVADA**.
+
+    * Para FIRMAR DIGITALMENTE se FIRMA con la CLAVE PRIVADA del EMISOR y el RECEPTOR verifica la FIRMA con la clave PÚBLICA del EMISOR.
+
+    * Se usan dos claves para salver lo de COMPARTIR EL SECRETO.
+
+        * Todo el mundo tiene una clave privada sin compartir y una clave pública apra compartir.
+
+        * Algunos algorismos de clave asimétrica son RSA, DSA, Elgamal...
+
+
+* Criptografía HÍBRIDA:
+
+    * Es más rápida y menos costosa (**SIMÉTRICA**).
+
+    * Tiene el inconveniente de que los dos interlocutores saben la clave simétrica (**SIMETRICA**).
+
+    * Un mecanismo muy usado para comunicaciones seguras. --> Como son SSH o SSL --> Combinan los dos tipos de criptografías.
+
+    * El asimétrico --> Claves pública/privada --> No hace falta compartir secreto.
+
+    * Una vez establecida la comunicación segura de los dos INTERLOCUTORES --> Puede intercambiarse un **SECRETO COMPARTIDO** e iniciar una **COMUNICACIÓN CIFRADA SIMÉTRICA** que proporciona un rendimiento mejor para un CIFRADO de **Diálogo** contínuo **TCP**.
+
+----------------------------------------------------------------------------------
+
+* Claves:
+
+    * Privada:
+
+        * Clave del tipo RSA o DASA --> 1024, 2048 o 494 bits.
+
+        * Mantener fuera de alcance.
+
+    * Pública:
+
+        * Van en par con la privada.
+
+        * A partir de una clave privada se genera una pública.
+
+        * Se transforman en certificados --> No son útiles.
+
+    * Certificados:
+
+        * Las claves públicas se convierten en --> "Certificados Digitales".
+
+        * Una clave pública es avalada por una entidad.
+
+        * Papel con un sello por alguna entidad certificadora...
+        
+        * Formato X509.
+
+        * La finalidad 
+
+        * Es asociar la CLAVE PÚBLICA de alguien a alguna **ENTIDAD**.
+
+        * La finalidad de un CERTIFICADO es DEMOSTRAR que el POSEEDOR del certificado es QUIÉN DICE SER Y TIENE DERECHO A HACERLO. 
+
+        * Un certificado válido para hacer:
+        
+            * *emailProtection* --> Identifica el usuario y permite cifrar y firmar contenido EMAIL.
+
+            * serverAuth --> Identifica el servidor y le permite actuar como servidor usando SSL.
+
+        * La **clave pública de Pere** no sabemos si realmente es de **Pere** o de algún otro. En cambio un **certificado de Pere**, es una clave pública donde algúno con **AUTORIDAD, LO AVALA**, indicando que realmente es **PERE**.
+
+----------------------------------------------------------------------------------
+
+**FORMATOS DE FICHEROS**
+
+* PEM --> Formato más usual y por defecto. Contiene claves privada o pública en **FORMATO ASCII**. Se codifica en **base64** para luego generar un texto ASCII imprimible. Se le añaden **CABECERAS Y PIES**.
+
+* DER --> **Formato Binario**.
+
+* CIFRADO --> Se puede cifrar con contraseña como medida extra. 
+
+* OTROS --> .cert, .crt, .crs, .key --> Mejor **.pem**
+
+----------------------------------------------------------------------------------
+
+**CREACIÓN DE CLAVES Y CERTIFICADOS**
+
+Cada usuario puede crear su propia clave privada. Para crear la clave pública:
+
+* Crear una clave "avalada" por ellos mismos --> **Certificados Autofirmados**.
+
+* Crear una petición a una entidad de CERTIFICACIÓN (**Certification Authority**) --> Genera un certificado avalado por esta CA.
+
+----------------------------------------------------------------------------------
+
+**MODELO DE CONFIANZA**
+
+* El emisor y receptor tienen que indicar el **nivel de confianza**.
+
+* Depende del receptor si confía mucho o confía poco en algún emisor podrá hacer tales cosas.
+
+* Para ello el emisor debe **avalar un certificado válido por alguna entidad certificadora** para hacer tales cosas.
+
+* Ejemplo: Faltar a clase.
+
+    1. Falta a clase --> Autofirmado --> Poca confianza.
+
+    2. Falta a clase --> Lo firma su madre --> Firmado por entidad externa --> Lo creerá depende del papel de la madre.
+
+    3. Falta a clase hijo del director --> El profesor se lo cree porque confía y conoce la **firma del director**.
+
+    4. Falta a clase por médico --> Profesor se lo crre porque hay una **FIRMA OFICIAL**.
+
+----------------------------------------------------------------------------------
+
+**WEB OF TRUST** --> El usuario es responsable de confiar o no con otros CERTIFICADOS. No hay entidades de certificación. Si varias personas confían en otra persona automáticamente confiarás con una persona.
+
+**PKI** --> Public Key Infrastructura --> Se basa en la confianza EMOSIRA del CERTIFICADO o CA.
+
+### ELEMENTOS RELACIONADOS CON LA CONFIANZA
+
+**CA self-signed** --> Una CA se auto firma a sí misma. Sólo dentro de la EMPRESA.
+
+**CA top** --> Una CA autofirmada TOP. Es de nivel superior.
+
+**CA delegada** --> Empresa que puede emitir ceritificados como delegados de una empresa de certificación superior.
+
+**Cadena de confianza** --> PKI --> Estructura piramidal. Una CA delegada avalada por una entidad de grado superior.
+
+**Llavero de claves** --> Todas las llaves se van acumulando en un llavero. Tienen la clave privada y la clave pública de cualquier emisor.
+
+**HASH** --> Genera fingerprints, tiene que ver con FIRMAR. En las contraseñas son de formato MD5, **LOS HASHES SON EL RESUMEN DE LA CONTRASEÑA**. 
+
+* Un algoritmo de hash es un resumen.
+
+* SON:
+
+    * MD5 --> Genera un resumen de 128 bits.
+
+    * SHA1 --> Secure Hash Algorism.
+
+----------------------------------------------------------------------------------
+
+**FIRMAR HÍBRIDO**
+
+1. Se genera un **hash** o un **resumen del mensaje**.
+
+2. Este resumen se cifra con la **clave privada del emisor**. Sólo el **`resumen`**, no todo el mensaje.
+
+3. El **receptor calcula** un **resumen** del mensaje que **recibe** (de la parte correspondiente al mensaje).
+
+4. El **`receptor descifra`** el **hash** que ha **recibido**. Lo **descifra** con la **`clave pública`** del **emisor** y obtiene el **resumen original** que ha calculado el emisor.
+
+5. Los **dos hash** deben ser **`iguales`**. Si lo son la firma digital es correcta, si no lo son es incorrecta.
+
+Las condiciones que se cumplen son:
+
+1. **`Se garantiza la autenticación`**. Sólo el emisor puede haber generado el mensaje si el hash es descifrable por la clave pública del emisor.
+
+2. **`Se garantiza la integridad`**. Nadie más puede haber modificado el mensaje porque al hacerlo se hubiera modificado el hash que calcula el receptor y no coincidirían. 
+
+    * Debido a que nadie más que el emisor tiene su clave privada un atacante puede modificar el contenido pero no puede firmarlo de nuevo (calcular el nuevo hash).
+
+3. No es necesario cifrar todo el mensaje, sólo el hash, que es la parte que garantiza que no se ha modificado. 
+
+
+
+----------------------------------------------------------------------------------
+
+**CIFRAR HÍBRIDO**
+
+1. El mensaje se cifra con una *clave simétrica*. 
+
+    * Esta clave sólo la conoce el **`emisor`**.
+
+2. Se utiliza una clave simétrica porque el cifrado es **menos costoso** computacionalmente que usando claves asimétricas.
+
+3. La clave simétrica se **`encripta`** usando la **`clave pública`** del **`destinatario`**.
+
+4. Es el mecanismo para enviar la *clave simétrica*, 'el **`secreto compartido`**' de forma segura.
+
+5. Se envía el mensaje **cifrado(simétrico)** y la **`clave de cifrado (asimétrico)`**.
+
+6. El receptor **desencripta** la clave de cifrado usando su **`propia clave privada`**.
+
+7. Una vez sabe cuál es el '**`secreto compartido`**' puede pasar a **`descifrar`** el mensaje usando esta **`clave simétrica`**.
+
+Las condiciones que se cumplen son:
+
+1. Se encripta usando **`criptografía simétrica`** por ser más rápido y eficiente.
+
+2. La **`criptografía asimétrica`** sirve para transferirse el '**`secreto compartido`**', la clave usada **`realmente para encriptar`**.
+
+3. Estos tipos de claves se llaman **`claves de sesión`**. 
+
+----------------------------------------------------------------------------------
+
+# Rubén Rodríguez García
+# GPG (GNU Privacy Guard)
+
+### Apunts generals:
+PGP --> Pretty Good Privacity (Software de xifrat de privacitat / seguretat).
+
+GNU --> Va crear GPG (Software lliure).
+
+**Els següents individus (Alice i Bob), és volen communicar de manera segura, com ho fan?**
+
+Mitjançant *criptografía simètrica* (secret compartit).
+
+* Info: La velocitat de transformació és + ràpida que la 'asmètrica', el cost computacional és - petit i les claus són + petites
+
+El receptor com sap el 'secret' pot rebre, l'inconvenient, és que el 'secret' és comparti, llavors apareix...
+
+*Criptografía asimètrica* (Cada usuari té una clau privada i una clau pública).
+
+* Info: La velocitat de transformació és + lenta, el cost computacional és + gran i les claus són + grans.
+* Inconvenient: No té rendiment per poder processar en fluxe contínu el tràfic *'in-motion'*.
+
+Encara això, **LES DOS CLAUS SÓN IGUAL DE SEGURES, S'UTILITZEN PER PROPÒSITS DIFERENTS**.
+
+L'objectiu de la clau privada és que **NOMÉS** la pot tenir **EL PROPIETARI**.
+
+L'objectiu de la clau pública és **PROPAGARLA**, quan més persones la coneguin, millor.
+
+Les dues claus formen un 'joc' conjunt, el que una fà, l'altra ho desfà.
+
+**Com pot fer l'Alice per enviar-li un missatge secret a Bob fent servir 'criptografía asimètrica'?**
+
+L'Alice enviarà el **missatge + clau pública** d'en Bob, i aquest ho rebrà amb la seva pròpia clau privada (aquesta només la te ell perquè és la SEVA clau privada)
+
+*Xifrar / desxifrar*
+
+Quan en Bob **Xifri + possi la seva clau privada** llavors obtindrà el missatge original.
+
+*Signar:*
+
+* Autoría --> Comprovar que l'autor del document en qüestió és qui diu ser.
+* Integritat --> Comprovar que el document no ha sigut modificat.
+* No repudi --> No pots dir que no has sigut tú.
+
+**GPGs --> criptografía simètrica, criptografía asimètrica, xifrar / desxifrar, signar.**
+
+**Com fa l'Alice per enviarun document signat al Bob?**
+
+Agafa el missatge, i a aquest li aplica una transformació amb la seva clau privada i ho envía (perquè vol demostrar que és seu).
+
+El Bob agafa el missatge signat, i li aplica la clau pública de l'Alice (quan fa això pot extreure el missatge original).
+
+*Criptografía híbrida* --> El client i el servidor fan servir *'asimètric'* per acordar un **'secret'** compartit, llavors el **'tub'** de transmissió de dades serà *'simètric'*
+
+*Hash / Funció Resum* --> MD5, SHA2. Donat un contingut, genera un resum (aquest, és únic, si canviem alguna cosa, el HASH serà totalment diferent) (256 o 512 bits --> l'actual).
+
+La probilitat de que el HASH geenrat sigui igual a un altre, és pràcticament imposible (99%).
+
+S'utlitza molt en les operacions de signatura.
+
+Donat un document (missatge), és genera el HASH del missatge, és signa amb la clau privada (és transforma) i s'envía. De manera que, l'Alice i en Bob, en lloc de signar el missatge, el missatge s'envía tal qual i és signa el HASH.
+
+El destinatari rep el missatge i del missatge que rep, calcula el HASH. (Quan aplica la clau pública d'Alice sobre el missatge, obté el HASH, ademés és demostra que és de l'Alice si el HASH és el mateix que ha enviat l'Alice).
+
+PKI --> Publick Key Infrastructure (model de seguretat).
+
+GPG funciona en el model 'Web Of Trust' (Xarxa de confiança).
+
+Web Of Trust --> Cada usuari ha de decidir en qui confía.
+
+### GNU PRETTY GOOD
+
+* **Pretty Good Privacity**. Es un cifrado de seguridad. Ofrece seguridad en las comunicaciones.
+
+* No le gusta al tio SAM. (Linux)
+
+* Tener cuidado con los delincuentes.
+
+* En el libro en el código estaba en código C --> Lo pasa en C y tienes tu programa.
+
+* PGP es el ORIGINAL.
+
+* GNU hizo la versión pública.
+
+* **GNU PG --> GPG** 
+
+---------------------------
+
+* ALICE
+
+* BOB
+
+* Se quieren comunicar de forma segura.
+
+* Con criptografía simétrica.
+
+    * Hay un secreto compartido.
+
+    * El emisor encripta su secreto y el receptor, como conoce el secreto, lo desencripta.
+
+    * El secreto tiene que ser compartido.
+
+* Criptografía **asimétrica**
+
+    * Cada usuario tiene una **CLAVE PRIVADA** Y UNA **CLAVE PÚBLICA**.
+
+    * Es un secreto privado.
+
+    * La clave **PÚBLICA** es *propagarla* a cualquier host.
+
+* Las 2 claves hacen algo conjunto, las 2 hacen y las dos deshacen. Funcionan por **PAREJAS**.- ---> **ASIMÉTRICA**
+
+
+
+### ENVÍO ASIMÉTRICA
+
+* El EMISOR envía y firma su mensaje con SU CLAVE PRIVADA.
+
+* EL RECEPTOR recibe y desencriba el mensaje con al CLAVE PÚBLICA del EMISOR.
+
+
+* Si hay clave pública y clave privada es **ASIMÉTRICA**
+
+#### Ejemplo
+
+1. Alice envía el MENSAJE FIRMADO y lo CIFRA con la CLAVE PRIVADA la de ALICE.
+
+2. BOB recibe el Mensaje FIRMADO de ALICe y lo DESENCRIPTA con la clave pública de ALICE.
+
+3. Se recibe el MENSAJE.
+
+
+
+
+### ENVÍO SIMÉTRICA
+
+* Velocidad transformación y coste de envío es más rápida que la asimétrica.
+
+* El coste computacional es más pequeño.
+
+* Las claves son más pequeñas.
+
+* Los algoritmos son más pequeños y más eficientes.
+
+* Todo contrasta con el ASIMÉTRICO
+
+    * Más lento.
+
+    * Más costoso de Mem/CPU
+
+    * Claves más grandes.
+
+
+**LA ASIMÉTRICA NO ES MÁS SEGURA**
+
+**LA SIMÉTRICA PESA MENOS**
+
+**LAS DOS SON IGUAL DE SEGURASS**
+
+
+**EL SECRETO RADICA EN QUE PUEDES COMPARTIR UN SECRETO O NO**.
+
+* NO HAY UNA MÁS SEGURA QUE EL OTRO, SE USAN POR PROPÓSITOS DIFERENTES.
+
+* Igual de segurs uno y otro.
+
+
+* **TLS/SSL = DATA IN MOTION (VIAJA EN CRIPTOGRAFÍA SIMÉTRICA)**
+
+* **Certificado DIGITAL** es **CLAVE PUBLICA y CLAVE PRIVADA**.
+
+
+#### CRIPTOGRAFÍA HÍBRIDA
+
+* El **cliente** y el **SERVER** usan **ASIMÉTRICO** para establecer un **SECRETO COMPARTIDO**. --> El tubo de transmisión de datos es **SIMÉTRICO**.
+
+
+* SSH usa clave pública / clave privada --> Pero solo para HOST.
+
+* Se negocia una clave principal de SESIÓN y luego se negocia una CLAVE en que se ENVIAN los datos.
+
+    * Cada 60 SEGUNDOS, o K , cambiaremos la CLAVE DE TRANSMISIÓN.
+
+    * Un atacante que intenta atacar con el WIRESHARK, no le servirá porque no tendrá mucho tiempo, para rebentar la **clave de transmisión**. 
+
+    * ASIMÉTRICA nos sirve para VALIDAR en un BANCO y eso y SIMETRICO para **ENVIO DE DATOS**.
+
+
+
+#### HASH
+
+* Donado un contenido - Genera un RESUMEN.
+
+* MD5
+
+* SHA2
+
+* Este resumen es único. Si se modifica algo, se crea otro hash.
+
+
+* El HASH + FIRMA (Se Cifra con la Clave Privada.)
+
+* Se firma el HASH.
+
+* El destinatario recibe el MENSAJE HASH y calcula el HASH RECIBIDO.
+
+
+ALICE                   BOB
+
+[MENSAJE] --------------> [MENSAJE-RECIBIDO]
+
+([HASH] + SIGNA Hash (Clau Privada)) ---> [HASH-SIGNAT] + CLAU PUBLICA ALICE 
+
+
+                                    ----> SE GENERA OTRO **HASH** PARA VERIFICAR CON EL ORIGEN. 
+
+* Se demuestra que son iguales.
+
+    * Si no se ha falsifidado o tempered
+
+
+
+* HASH es donado el contenido ORIGEN, se GENERARÁ SIEMRPE EL MISMO HASH.
+
+    * Se verifica con el EMISOR si es la MISMA.
+
+    * Se obtiene el MENSAJE ORIGINAL.
+
+    * Desenlace con la clave pública de ALICE demuestra que el HASH es el CORRECTO.
+
+
+
+
+**Ejemplo**
+
+* Se aplica una transformación. 
+
+* Una vez descifrada el HASH RECIBIDO, se desencripta el MENSAJE y se verifica con la clave pública del EMISOR si coincide con el MENSAJE ORIGINAL y el HASH del EMISOR.
+
+--------------------------------------------------------------
+
+
+
+**EJERCICIOS**
+
+* adduser pere | marta | user
+
+* useradd -m -s /bin/bash user
+
+* gpg --gen-key (User Pere) 
+
+```
+pere@i11:~$ gpg --gen-key
+gpg (GnuPG) 2.2.27; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+gpg: directory '/home/pere/.gnupg' created
+gpg: keybox '/home/pere/.gnupg/pubring.kbx' created
+Note: Use "gpg --full-generate-key" for a full featured key generation dialog.
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: Pere Pou Prat
+Email address: pere@edt.org
+You selected this USER-ID:
+    "Pere Pou Prat <pere@edt.org>"
+
+Change (N)ame, (E)mail, or (O)kay/(Q)uit? O
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: agent_genkey failed: Permission denied
+Key generation failed: Permission denied
+
+```
+
+* pere@i11:~$ export GPG_TTY="$(tty)"
+
+* pere@i11:~$ gpg --full-generate-key
+
+
+**SON PAREJAS DE CLAVES PUBLICA - PRIVADA**
+
+```
+pere@i11:~$ gpg --full-generate-key
+gpg (GnuPG) 2.2.27; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Please select what kind of key you want:
+   (1) RSA and RSA (default)
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+  (14) Existing key from card
+Your selection? 
+
+```
+
+
+* TIPOS:
+
+    * RSA = Nueva versión del DSA.
+
+    * Elgamal = Otro algorismo.
+
+
+* Enter --> Genera un RSA Key de 1024 Keys.
+
+    * Por defecto da 3072 de tamaño.
+
+
+* TIME
+
+```
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0) 
+
+
+```
+
+* Por defecto da 0 (No expira nunca).
+
+
+
+```
+Is this correct? (y/N) y
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: Pere Pou Prat
+Email address: pere@edt.org
+Comment: lo pere d'alcarràs
+You are using the 'utf-8' character set.
+You selected this USER-ID:
+    "Pere Pou Prat (lo pere d'alcarràs) <pere@edt.org>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: agent_genkey failed: Permission denied
+Key generation failed: Permission denied
+
+```
+
+
+#### DA ERROR
+
+* pere@i11:~$ ls -l $(tty)
+crw--w---- 1 www-data tty 136, 0 Feb 22 11:51 /dev/pts/0
+pere@i11:~$ sudo chown pere $(tty)
+pere@i11:~$ ls -l $(tty)
+crw--w---- 1 pere tty 136, 0 Feb 22 11:51 /dev/pts/0
+pere@i11:~$ 
+
+
+1. Añadir el USUARIO al SUDO. sudo adduser pere sudo
+
+2. IMPORTANTE TIENE QUE ESTAR EL USUARIO DE LA SESIÓN DE TERMINAL COMO PROPIETARIO DE LA TERMINAL.
+
+3. SU -L PERE 
+
+4. ls -l $(tty)
+
+5. sudo chown pere $(tty)
+
+
+```
+pere@i11:~$ ls -l $(tty)
+crw--w---- 1 www-data tty 136, 0 Feb 22 11:51 /dev/pts/0
+pere@i11:~$ sudo chown pere $(tty)
+pere@i11:~$ ls -l $(tty)
+crw--w---- 1 pere tty 136, 0 Feb 22 11:51 /dev/pts/0
+pere@i11:~$ gpg --full-generate-key
+gpg (GnuPG) 2.2.27; Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Please select what kind of key you want:
+   (1) RSA and RSA (default)
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+  (14) Existing key from card
+Your selection? 
+RSA keys may be between 1024 and 4096 bits long.
+What keysize do you want? (3072) 
+Requested keysize is 3072 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n months
+      <n>y = key expires in n years
+Key is valid for? (0) 0
+Key does not expire at all
+Is this correct? (y/N) y
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: Pere
+Name must be at least 5 characters long
+Real name: Pere Papito
+Email address: pere@edt.org
+Comment: Hola
+You selected this USER-ID:
+    "Pere Papito (Hola) <pere@edt.org>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: /home/pere/.gnupg/trustdb.gpg: trustdb created
+gpg: key F8C029DA130F5D1B marked as ultimately trusted
+gpg: directory '/home/pere/.gnupg/openpgp-revocs.d' created
+gpg: revocation certificate stored as '/home/pere/.gnupg/openpgp-revocs.d/42DE3CC00E0A6A88F116304BF8C029DA130F5D1B.rev'
+public and secret key created and signed.
+
+pub   rsa3072 2022-02-22 [SC]
+      42DE3CC00E0A6A88F116304BF8C029DA130F5D1B
+uid                      Pere Papito (Hola) <pere@edt.org>
+sub   rsa3072 2022-02-22 [E]
+
+```
+
+
+#### .GNUPG [DIR DE RECOVACIONES - COSES PRIVADES]
+
+
+6. Accedemos a la carpeta **.gnupg**
+
+    * RING es **LLAVERO** no es ANILLO.
+
+    * Es un llavero de **CLAVES**.
+
+    * pubring = **LLAVERO**.
+
+#### GPG --LIST-KEYS
+
+7. gpg --list-keys
+
+```
+pere@i11:~/.gnupg$ gpg --list-keys
+gpg: checking the trustdb
+gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+gpg: depth: 0  valid:   2  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 2u
+/home/pere/.gnupg/pubring.kbx
+-----------------------------
+pub   rsa3072 2022-02-22 [SC]
+      42DE3CC00E0A6A88F116304BF8C029DA130F5D1B
+uid           [ultimate] Pere Papito (Hola) <pere@edt.org>
+sub   rsa3072 2022-02-22 [E]
+
+pub   rsa3072 2022-02-22 [SC]
+      EDC60BDECEAB275809A4C17EE4A32747748C67BE
+uid           [ultimate] Pere Papito Perez (secret) <pere@edt.org>
+sub   rsa3072 2022-02-22 [E]
+
+pere@i11:~/.gnupg$ 
+
+```
+
+* Es una clave RSA3072 -- 2022-02-22 [SC] --> Signar i fitxhear
+
+* Descripció i correu - Cualquiera sirve para describir la clave.
+
+* [Ultimate] --_> Cuando confia PERE, realmente sea de PERE.
+
+
+---
+
+* Los leones exportan las claves públicas y compartirlas.
+
+
+
+
+
+
+
+
+
+
+----
+
+#### EXPORTAR
+
+* gpg --output /tmp/pere.gpg --export pere@edt.org
+
+* ls /tmp/pere.gpg
+
+* file /tmp/pere.gpg
+
+* cat /tmp/pere.gpg
+
+    * Está representado en BINARIO.
+
+---
+
+* gpg --armor --output /tmp/pere.pem --export pere@edt.org
+
+* file /tmp/pere.pem
+
+* cat /tmp/pere.gpg
+
+    * Es el clasico formato PEM de los DOCUMENTOS.
+
+        * El BINARIO se le añade Base64 (Se le añade una CABECERA Y UN PIE) y se genera ASCII.
+
+        * Se le añade una cabecera (BEGIN...) y en el pie (Lo cierra).
+
+* Es la clave **pública de PERE**
