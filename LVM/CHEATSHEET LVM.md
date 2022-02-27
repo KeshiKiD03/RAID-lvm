@@ -27,31 +27,36 @@
 
 * LV --> E2RESIZE
 
+### Ordres:
+
+* apropos lvm --> Ens dona informació dels diferents manuals de LVM disponibles.
+* system-config-lvm [&] --> Ordre per entrar al entorn gràfic (Debian no ho enté)
+
 * COMANDOS Physical Volume:
 
-    * pvcreate --> Crea PV a partir de un disco
+    * pvcreate [particion1] [part2] --> Crea PV a partir de un disco
 
-    * pvdisplay --> Muestra PV
+    * pvdisplay [part] --> Muestra PV
 
-    * pvmove --> Mueve los datos de un lado a otro PV
+    * pvmove [part] --> Mueve los datos de un lado a otro PV
 
-    * pvremove --> Remueve el PV
+    * pvremove [part] --> Remueve el PV
 
-    * pvresize --> Cambia de tamaño.
+    * pvresize [part] --> Cambia de tamaño.
 
-    * pvscan --> Escanea todos los discos PV.
+    * pvscan [part] --> Escanea todos los discos PV.
 
 * COMANDOS VG:
 
-    * vgcreate --> Crea un VG a partir de un PV
+    * vgcreate [nombreVG] [pv1] [pv2] --> Crea un VG a partir de un PV o varios.
 
-    * vgdisplay --> Muestra VG
+    * vgdisplay [nombreVG] --> Muestra VG
 
-    * vgextend --> Añade más PV al Volume Group.
+    * vgextend [nombreVG] [pv1] [pv2] --> Añade más PV al Volume Group.
 
-    * vgreduce --> Reduce el VG quitando uno o más PV.
+    * vgreduce [nombreVG] [pv1] [pv2] --> Reduce el VG quitando uno o más PV.
 
-    * vremove --> Elimina el VG.
+    * vremove [nombreVG] [pv1] --> Elimina el VG.
 
     * vgrename --> Cambia nombre VG.
 
@@ -61,25 +66,25 @@
 
 * COMANDOS LV:
 
-    * lvcreate --> Crea un LV a partir de un VG
+    * lvcreate [-L] [50M] [-n] [nombre] [nombreVG] --> Crea un LV a partir de un VG
 
-    * lvdisplay -->
+    * lvdisplay [rutaLV] --> Muestra LV
 
-    * lvextend -->
+    * lvextend --> Extiende LV (-r extiende también Sistema de Ficheros)
 
-    * lvmconfig -->
+    * lvmconfig --> 
 
-    * lvmdiskscan -->
+    * lvmdiskscan --> Escanea LV
 
-    * lvmreduce -->
+    * lvmreduce --> Reduce LV (-r reduce también el Sistema de Ficheros)
 
-    * lvmremove -->
+    * lvmremove --> Borra LV
 
-    * lvmrename -->
+    * lvmrename --> Cambia nombre LV
 
-    * lvresize -->
+    * lvresize --> Cambia el tamaño de LV
 
-    * lvscan -->
+    * lvscan --> Escanea LV
 
 * COMANDOS GROW / SHRINK (LV + SISTEMA FICHEROS)
 
