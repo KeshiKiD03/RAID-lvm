@@ -155,18 +155,18 @@ pvremove (8)         - Remove LVM label(s) from physical volume(s)
 #### DD (`Convert and COPY a FILE`) --> /dev/zero (Imaginario)
 
 ```
-root@i11:/opt/lvm# dd if=/dev/zero of=disk01.img bs=1k count=500K
+root@i11:/opt/lvm# dd if=/dev/zero of=disk01.img bs=1k count=100K
 
 512000+0 records in
 512000+0 records out
-524288000 bytes (524 MB, 500 MiB) copied, 0.533952 s, 982 MB/s
+524288000 bytes (124 MB, 100 MiB) copied, 0.533952 s, 982 MB/s
 ```
 ```
-root@i11:/opt/lvm# dd if=/dev/zero of=disk02.img bs=1k count=500K
+root@i11:/opt/lvm# dd if=/dev/zero of=disk02.img bs=1k count=100K
 
 512000+0 records in
 512000+0 records out
-524288000 bytes (524 MB, 500 MiB) copied, 0.540251 s, 970 MB/s
+524288000 bytes (124 MB, 100 MiB) copied, 0.540251 s, 970 MB/s
 
 ```
 ```
