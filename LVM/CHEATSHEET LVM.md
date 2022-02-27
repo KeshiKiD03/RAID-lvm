@@ -1,5 +1,26 @@
 # CHEATSHEET LVM + Teoria
 
+### Descripció:
+* LVM: Logical Volume Manager
+
+\------------------    \-----------------
+|   S.O  |  Dades | --> | Nou Hard Disk |
+\------------------    \-----------------
+
+**Explicació:** Volem afegir un nou Disc Dur per ampliar la partició dades.
+
+*Creació de D.D lògic:*
+\-----------------
+| Disc Dur lògic |
+\-----------------
+
+**Explicació:** Convertim tot el disc en un nou Disc Dur lògic i ara podem fer canvis (resize) en calent, per tant podrem afegir el nostre D.D sense necessitat d'apagar l'ordinador.
+
+* Data at rest --> Data que està parada (seguretat a ñes dades que estàn 'parades', emmagatzemades)
+  		   EX: GPG (mail)
+* Data in motion --> Data que està en transti (seguretat a les dades que estàn en 'moviment')
+		     EX: Kerberos (autenticació)
+
 * PV --> VG --> LV
 
 * LV --> MKFS / Mount (FSTAB)
