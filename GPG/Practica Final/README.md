@@ -3,14 +3,25 @@
 ### 2HISX 2021-2022
 ### Aaron Andal
 
-https://geekland.eu/aprender-markdown-en-minutos/ 
+## INDEX
 
-#### EMOJIS CHEATSHEET
 
-👹 🤬  😍 🥰  🥺  👾  👽  👍  🔥  🌈 ☀️  🌤 ☄️  🚧 ☢️ 
+* **GPG**: [GPG](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
 
-☣️ ⛔️  💮  🆚 ❗️ ❗️ ❗️ ❓ ❓  💯 ❤️‍🔥  💛  🧡  💟 
+    * **GPG**: [GPG](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
 
+    * **GPG**: [GPG](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+
+    * **GPG**: [GPG](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+
+    * **GPG**: [GPG](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+
+    * **GPG**: [GPG](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+
+    * **GPG**: [GPG](https://github.com/KeshiKiD03/samba21#pr%C3%A1ctica-pam---ldap---samba-en-aws-educate)
+
+
+## GPG
 
 ## CHEAT SHEET
 
@@ -761,12 +772,3 @@ pere@i11:~/.gnupg$
         * Se le añade una cabecera (BEGIN...) y en el pie (Lo cierra).
 
 * Es la clave **pública de PERE**
-
-
-
-#### HOY 23.02.22 GPG
-
-**LEER practica1.md**
-
-
-
