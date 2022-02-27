@@ -92,6 +92,23 @@
 
     * losetup -d --> Delete
 
+PE = UNIDAD BÁSICA DE ASIGNACIÓN --> * A la hora de hacer los Volúmenes Físicos se pierde un porcentaje de información. Se pierde espacio de almacenamiento debido a crear estructuras para la gestión LVM.
+
+## APUNTES DE LVDISPLAY
+
+Segments = 1 [COGE EL ESPACIO NECESARIO de una PV] --> El sistema redirige en uno, mientras que DADES redirige en 2 VOLUMENES LÓGICOS.
+
+    SISTEMA = SEGMENT 1 (1 DISCO PV)
+
+    DADES = SEGMENT 2 (2 DISCOS PV)
+    
+## APUNTES DE LVDISPLAY
+
+La cantidad de PE que utiliza cada Logical Volume, sistema utiliza 13 de 4MB que proporciona 52MB de almacenamiento, todos ellos en un mismo segmento (Physical Volume).
+
+En cambio dades utiliza 35 unidades de asignación PE de 4MB, proporcionando 140MB de almacenamiento y ocupa 2 segmentos.
+
+ * Es decir 2 **Volúmenes FÍSICOS.**.
 
 # PRÁCTICA INICIAL LVM
 
@@ -118,6 +135,8 @@
 * **` -l100%FREE --> OCUPA todo el ESPACIO.`**
 
 * **`-l50%FREE --> La mitad.`**
+
+* **`l50%VG --> Añadirá la mitad del DISCO`** 
 
 **REVISAR**
 
@@ -203,6 +222,45 @@ La principal ventaja de utilización de LVM es que se puede **`modificar en cali
 **`IMPORTANTE`**
 
 * `Es importante remarcar que si queremos **redimensionar una LV**, hay que redimensionar también su **SISTEMA DE FICHEROS**`
+
+**`RECUERDA`**
+
+* resize2fs /dev/diskedt/sistema 30M --> **REDIMENSIONA EL SISTEMA DE FICHEROS EXT4 DE /DEV/DISKEDT/SISTEMA A 30M**.
+
+* e2fsck -f /dev/diskedt/sistema --> **VERIFICA SISTEMA DE FICHEROS**
+
+Modificación:
+
+* Más grande --> Hacer más grande la PARTICIÓN (**LVEXTEND**) y luego los DATOS (Sistema de FICHEROS) (Resize2fs o lvextend -r)
+
+* Más pequeño --> BORRAR parte de DATOS o MOVER (pvmove) (Resize2fs) y luego hacer mças pequeña la CARPETA (lvreduce).
+
+lvreduce -L 32M /dev/diskedt/sistema --> YES / This May...
+
+mount /dev/diskedt/sistema /mnt/sistema
+
+ls /mnt/sistema
+
+df -h
+
+blkid
+
+lsblk
+
+vgdisplay
+
+
+journalctl -f > /mnt/sistema ----> **OBSERVAMOS EN TIEMPO REAL**
+
+pvmove /dev/loop2 --> **IMPORTANTE MOVER ANTES DE HACER UN VGREDUCE --> SE ASIGNAN PE LIBRES A OTROS PV**.
+
+root@i11:/opt/lvm# pvmove /dev/loop2
+  /dev/loop2: Moved: 29.17%
+  /dev/loop2: Moved: 54.17%
+  /dev/loop2: Moved: 100.00%
+  
+  
+  RESUMEN: 1. Desvincular primero (**pvmove**) --> Quitar PV del grupo (**vgreduce**) --> Borrar el PV (**pvremove**)
 
 **`Modificaciones en Caliente`**
 
