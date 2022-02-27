@@ -66,9 +66,9 @@
 
     * resize2fs /dev/diskedt/sistema
 
-    * 
+    * sudo lvreduce -L 25M -r /dev/diskedt/sistema --> -r (fa el resize2fs)
 
-    * 
+    * sudo lvextend -L +200M -r /dev/diskedt/dades
 
     * 
 
