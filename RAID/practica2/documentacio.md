@@ -33,11 +33,11 @@
 * mkdir /mnt/sistmea /mnt/dades --> Creem aquestes carpetes per muntar 'sistema' i 'dades'
 * mkfs -t ext4 /dev/diskedt/sistema
 * mkfs -t ext4 /dev/diskedt/dades
-* mount /dev/mydisc/sistema /mnt/sistema --> Muntem la partició 'sistema' on correspon
-* mount /dev/mydisc/dades /mnt/dades --> Ídem a l'anterior però amb la partició 'dades'
+* mount /dev/diskedt/sistema /mnt/sistema --> Muntem la partició 'sistema' on correspon
+* mount /dev/diskedt/dades /mnt/dades --> Ídem a l'anterior però amb la partició 'dades'
 * cp -r /bin/x\* /mnt/sistema
 * cp -r /bin/x\* /mnt/dades
-* vim ftsab
+* vim /etc/fstab
 * /dev/diskedt/sistema /mnt/sistema ext4 errors=remount-ro 0 0
 * /dev/diskedt/dades /mnt/dades ext4 errors=remount-ro 0 0
 * mount -a --> Comprovem
@@ -48,3 +48,7 @@
 * mount -a --> Comprovem
 * umount /mnt/sistema
 * umount /mnt/dades
+* vgremove diskedt
+* echo "" > /etc/mdadm/mdadm.conf
+* mdadm --stop /dev/md/myraid
+* fdisk /dev/nvme0n1 --> Esborrem les particions
