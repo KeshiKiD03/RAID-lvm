@@ -26,7 +26,7 @@
 
 **LA CREACIÓN DEL RAID**
 
-* mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/loop1 /dev/loop2 --spare-devices=2 /dev/loop3 /dev/loop4 --> Afegim 2 devices al RAID1 i 2 discos spare
+* mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/loop0 /dev/loop1 --spare-devices=2 /dev/loop2 /dev/loop3 --> Afegim 2 devices al RAID1 i 2 discos spare
 
 * cat /proc/mdstat
 
@@ -36,37 +36,37 @@
 
 **FAIL DE UN DISCO (SPARE ENTRA EN ACCIÓN)**
 
-* mdadm /dev/md0 --fail /dev/loop2 --> Esptallem el 2
+* mdadm /dev/md0 --fail /dev/loop1 --> Esptallem el 1
 
-* mdadm --detail /dev/md0 --> Entra a treballar el 4 directament
+* mdadm --detail /dev/md0 --> Entra a treballar el 3 directament
 
 **FAIL DE UN OTRO DISCO (SPARE ENTRA EN ACCIÓN)**
 
-* mdadm /dev/md0 --fail /dev/loop4 --> Esptallem el 4
+* mdadm /dev/md0 --fail /dev/loop3 --> Esptallem el 3
 
 * mdadm --detail /dev/md0 --> Segueix 'clean' perquè hi ha 2 discos treballant
 
-* mdadm /dev/md0 --fail /dev/loop3
+* mdadm /dev/md0 --fail /dev/loop2
 
 * mdadm --detail /dev/md0 
 
 * dd if=/dev/zero of=disk05.img bs=1k count=100K --> Creem la nova imatge
 
-* losetup /dev/loop5 disk05.img --> L'afegim al loopback
+* losetup /dev/loop4 disk05.img --> L'afegim al loopback
 
-* mdadm /dev/md0 --add /dev/loop5 --> Afegim al RAID la nova imatge.
+* mdadm /dev/md0 --add /dev/loop4 --> Afegim al RAID la nova imatge.
 
 * mdadm --detail /dev/md0 --> Tornem a tenir 2 discos treballant
 
 **ELIMINAR LOS DOS DISCOS FAIL**
 
-* mdadm /dev/md0 --remove /dev/loop2 /dev/loop3 /dev/loop4 --> Els esborrem en 'calent'
+* mdadm /dev/md0 --remove /dev/loop1 /dev/loop2 /dev/loop3 --> Els esborrem en 'calent'
 
 **AÑADIR DE NUEVO LOS DOS DISCOS (ROL DE SPARE)**
 
-* mdadm /dev/md0 --add /dev/loop2 --> Afegim el 2 al 'banquillo' (spare)
+* mdadm /dev/md0 --add /dev/loop1 --> Afegim el 1 al 'banquillo' (spare)
 
-* mdadm /dev/md0 --fail /dev/loop2 /dev/loop5 --> Treiem el 2 i 5
+* mdadm /dev/md0 --fail /dev/loop1 /dev/loop4 --> Treiem el 1 i 4
 
 * mdadm /dev/md0 --fail /dev/loop1 --> FRACÀS!
 

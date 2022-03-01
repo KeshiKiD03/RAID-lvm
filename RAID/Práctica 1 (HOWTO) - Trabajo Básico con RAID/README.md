@@ -195,7 +195,7 @@ losetup /dev/loop3 disk04.img # --> Afegim la nova imatge al loopback
 
 **8. AÑADIR EL NUEVO LOOPBACK (/DEV/LOOP3) A RAID**
 ```bash
-* mdadm --manage /dev/md0 --add /dev/loop3 # --> Afegim el nou loopback al RAID --> 'manage' opcional
+mdadm --manage /dev/md0 --add /dev/loop3 # --> Afegim el nou loopback al RAID --> 'manage' opcional
 ```
 
 **Quan afegim un disc nou, en `background` va fent tota la '`pesca`' de sincronització (va volcant les dades del mirror)**
@@ -254,7 +254,7 @@ umount /mnt # --> Desmuntem el directori /mnt PRIMER per poder parar el RAID
 
 **3. PARAR EL RAID (¡AHORA SI!)**
 ```bash
-mdadm --stop /dev/md0 --> Ara SI podrem parar el RAID
+mdadm --stop /dev/md0 # --> Ara SI podrem parar el RAID
 ```
 
 
@@ -276,9 +276,12 @@ mdadm --assemble --scan # --> Ens informa de amb quants dicos ha iniciat el RAID
 
 **5. ESCOGER DISPOSITIVOS A UTILIZAR (ASSEMBLE)**
 ```bash
-mdadm --assemble /dev/md0 --run /dev/loop2 /dev/loop3 /dev/loop4 # --> Triem els dispositius que volem que utilitzi, si possem per exemple /dev/loop1, iniciara 2 en compte de 3
+mdadm --assemble /dev/md0 --run /dev/loop0 /dev/loop2 /dev/loop3 # --> Triem els dispositius que volem que utilitzi, si possem per exemple /dev/loop1, iniciara 2 en compte de 3
 
 ```
+
+mdadm: /dev/md0 has been started with 3 drives.
+
 
 **6. AÑADIR INFORMACIÓN DEL SCAN AL FICHERO EN CUESTIÓN (ASSEMBLE) (AUTOMÁTICO)**
 ```bash
