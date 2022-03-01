@@ -52,7 +52,24 @@
 
 **SOFTWARE RAID** --> MD Multi Disc.
 
+* Otros RAID
 
+* RAID 2 = RAID0 + RAID1 / Paridad Hamming
+
+* RAID 3 = RAID0 + PARIDAD (Bytes) --> Data striping + un disco de paridad - Min 3 discos (2 ern RAID0 + 1 paridad). If 1 disk fail --> Se recupera con bit de paridad.
+
+* RAID 4 = **``Block Striped (Dedicated Parity Disk)``** --> RAID3 + PARIDAD (Bloques) --> Toda la paridad en un MISMO DISCO --> Genera cuello de botella. Almacenamiento de RAID4 es lo mismo que el más pequeño.
+
+* RAID 6 = **`Striping con Paridad Doble`** --> Lo mismo que el RAID5
+
+* RAID 0 + 1
+
+* RAID 1 + 0
+
+**``Paridad``** --> Es la suma de todos los dispositivos utilizados en una MATRIZ --> Sirve Para recuperarse del fallo del dispositivo. Lee los datos buenos que quedan y los compara con el dato de paridad del almacenamiento conjunto.
+Es usada en los niveles 2, 3, 4 y 5.
+
+RAID1 no utiliza paridad.
 
 0. 
 
